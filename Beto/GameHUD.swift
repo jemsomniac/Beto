@@ -55,13 +55,13 @@ class GameHUD {
         highscoreLabel.verticalAlignmentMode = .Center
     }
 
-    func createHUDLayer() -> SKNode {
+    func createLayer() -> SKNode {
         gameHUD.position = CGPoint(x: 0, y: (ScreenSize.height - gameHUD.size.height) / 2)
 
         // Add actions
         menuButton.action = presentMenuScene
-        highscoreNode.action = presentAchievementsScene
-        coinsNode.action = addCoins
+        highscoreNode.action = displayAchievements
+        coinsNode.action = displayStore
         
         // Add nodes to gameHUD
         coinsNode.addChild(coinsLabel)
@@ -76,8 +76,13 @@ class GameHUD {
         return layer
     }
     
-    func addCoins() {
-        // DELETE: Placeholder for actual function
+    func displayStore() {
+        let store = Store()
+        let layer = store.createLayer()
+
+        scene.addChild(layer)
+        
+        // DELETE: Placeholder for In-App Purchases
         GameData.coins += 20
         coinsLabel.text = "\(GameData.coins)"
         
@@ -95,7 +100,10 @@ class GameHUD {
         scene.view?.window?.rootViewController?.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    func presentAchievementsScene() {
-        scene.view?.window?.rootViewController?.dismissViewControllerAnimated(true, completion: nil)
+    func displayAchievements() {
+        let achievements = Achievements()
+        let layer = achievements.createLayer()
+        
+        scene.addChild(layer)
     }
 }

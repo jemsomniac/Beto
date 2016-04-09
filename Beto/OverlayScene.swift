@@ -31,7 +31,7 @@ class OverlayScene: SKScene {
         boardLayer = board.createBoardLayer()
         
         gameHUD = GameHUD(scene: self)
-        gameHUDLayer = gameHUD.createHUDLayer()
+        gameHUDLayer = gameHUD.createLayer()
         
         
         addChild(gameHUDLayer)

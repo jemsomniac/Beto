@@ -37,11 +37,40 @@ class MenuScene: SKScene {
         startGameButton.action = presentGameScene
         addChild(startGameButton)
         
+        let customizeButton = ButtonNode(defaultButtonImage: "customizeButton")
+        customizeButton.size = CGSize(width: 44, height: 45)
+        customizeButton.position = CGPoint(x: -60, y: -100)
+        addChild(customizeButton)
+        
+        let achievementsButton = ButtonNode(defaultButtonImage: "achievementsButton")
+        achievementsButton.size = CGSize(width: 44, height: 45)
+        achievementsButton.position = CGPoint(x: 0, y: -100)
+        achievementsButton.action = displayAchievements
+        addChild(achievementsButton)
+        
+        let settingsButton = ButtonNode(defaultButtonImage: "settingsButton")
+        settingsButton.size = CGSize(width: 44, height: 45)
+        settingsButton.position = CGPoint(x: 60, y: -100)
+        settingsButton.action = displaySettings
+        addChild(settingsButton)
     }
     
     func presentGameScene() {
-
         self.view!.window!.rootViewController!.performSegueWithIdentifier("showGameScene", sender: self)
+    }
+    
+    func displayAchievements() {
+        let achievements = Achievements()
+        let layer = achievements.createLayer()
+        
+        addChild(layer)
+    }
+    
+    func displaySettings() {
+        let settings = Settings()
+        
+        let layer = settings.createLayer()
+        addChild(layer)
     }
 }
 

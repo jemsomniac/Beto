@@ -27,25 +27,15 @@ class GameDataManager {
         if(!fileManager.fileExistsAtPath(path)) {
             // If it doesn't, copy it from the default file in the bundle 
             if let bundlePath = NSBundle.mainBundle().pathForResource("GameData", ofType: "plist") {
-                let resultDictionary = NSMutableDictionary(contentsOfFile: bundlePath)
-                print("Bundle Gamedata.plist file is --> \(resultDictionary?.description)")
-                
                 do {
                     try fileManager.copyItemAtPath(bundlePath, toPath: path)
                 } catch {
                     print("Error copying file")
                 }
-                
-                print("copy")
             } else {
                 print("GameData.plist not found. Please make sure it is part of the bundle.")
             }
-        } else {
-            print("GameData.plist already exists at path.")
         }
-        
-        let resultDictionary = NSMutableDictionary(contentsOfFile: path)
-        print("Loaded GameData.plist file is --> \(resultDictionary?.description)")
         
         let myDict = NSDictionary(contentsOfFile: path)
         if let dict = myDict {
@@ -75,8 +65,6 @@ class GameDataManager {
         
         // write to GameData.plist
         dict.writeToFile(path, atomically: false)
-        let resultDictionary = NSMutableDictionary(contentsOfFile: path)
-        print("Saved GameData.plist file is --> \(resultDictionary?.description)")
     }
     
     func didUnlockCoin() -> Bool {

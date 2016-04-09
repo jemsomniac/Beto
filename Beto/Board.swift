@@ -281,8 +281,7 @@ class Board {
     }
     
     func changeVaultButtonTexture() {
-        coinVaultButton.defaultButton.texture = SKTexture(imageNamed: "coin\(GameData.defaultBetValue)")
-        coinVaultButton.activeButton.texture = SKTexture(imageNamed: "coin\(GameData.defaultBetValue)")
+        coinVaultButton.changeTexture("coin\(GameData.defaultBetValue)")
     }
     
     func squareAtColumn(column: Int, row: Int) -> Square {

@@ -73,4 +73,14 @@ class ButtonNode: SKNode {
         activeButton.hidden = true
         defaultButton.hidden = false
     }
+    
+    func changeTexture(texture: String) {
+        defaultButton.texture = SKTexture(imageNamed: texture)
+        activeButton.texture = SKTexture(imageNamed: texture)
+    }
+
+    func changeTexture(defaultTexture: String, activeTexture: String) {
+        defaultButton.texture = SKTexture(imageNamed: defaultTexture)
+        activeButton.texture = SKTexture(imageNamed: activeTexture)
+    }
 }
