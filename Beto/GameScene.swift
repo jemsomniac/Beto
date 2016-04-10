@@ -101,12 +101,7 @@ class GameScene: SCNScene, SCNSceneRendererDelegate {
     }
     
     func renderer(renderer: SCNSceneRenderer, updateAtTime time: NSTimeInterval) {
-
-        
-        
         if shouldCheckMovement {
-            
-            
             for node in geometryNodes.cubesNode.childNodes {
                 if node.physicsBody!.isResting || nearlyAtRest(node) {
                     

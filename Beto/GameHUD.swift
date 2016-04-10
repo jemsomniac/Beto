@@ -16,12 +16,12 @@ class GameHUD {
     let coinsNode: ButtonNode
     let highscoreNode: ButtonNode
     let menuButton: ButtonNode
-    let scene: OverlayScene
+    let scene: SKScene
     
     let coinsLabel: SKLabelNode
     let highscoreLabel: SKLabelNode
     
-    init(scene: OverlayScene) {
+    init(scene: SKScene) {
         self.scene = scene
         
         gameHUD = SKSpriteNode(imageNamed: "gameHUD")
@@ -60,6 +60,7 @@ class GameHUD {
 
         // Add actions
         menuButton.action = presentMenuScene
+
         highscoreNode.action = displayAchievements
         coinsNode.action = displayStore
         
@@ -95,9 +96,13 @@ class GameHUD {
         
         GameData.saveGameData()
     }
-    
+        
     func presentMenuScene() {
-        scene.view?.window?.rootViewController?.dismissViewControllerAnimated(true, completion: nil)
+        let transition = SKTransition.flipVerticalWithDuration(0.4)
+        let menuScene = MenuScene(size: scene.size)
+        menuScene.scaleMode = .AspectFill
+        
+        scene.view!.presentScene(menuScene, transition: transition)
     }
     
     func displayAchievements() {

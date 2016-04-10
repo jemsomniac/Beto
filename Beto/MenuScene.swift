@@ -34,7 +34,7 @@ class MenuScene: SKScene {
   
         let startGameButton = StartGameNode(defaultButtonImage: "startGame", activeButtonImage: "startGame_active")
         startGameButton.size = CGSize(width: 86, height: 103)
-        startGameButton.action = presentGameScene
+        startGameButton.action = presentBoardScene
         addChild(startGameButton)
         
         let customizeButton = ButtonNode(defaultButtonImage: "customizeButton")
@@ -55,8 +55,17 @@ class MenuScene: SKScene {
         addChild(settingsButton)
     }
     
-    func presentGameScene() {
-        self.view!.window!.rootViewController!.performSegueWithIdentifier("showGameScene", sender: self)
+//    func presentGameScene() {
+//        self.view!.window!.rootViewController!.performSegueWithIdentifier("showGameScene", sender: self)
+//    }
+//    
+    
+    func presentBoardScene() {
+        let transition = SKTransition.flipVerticalWithDuration(0.4)
+        let boardScene = BoardScene(size: self.size)
+        boardScene.scaleMode = .AspectFill
+    
+        view!.presentScene(boardScene, transition: transition)
     }
     
     func displayAchievements() {

@@ -16,7 +16,7 @@ class Board {
     private var squares = Array2D<Square>(columns: Columns, rows: Rows)
     private let squareSize: CGFloat = 92.0
     
-    private let scene: OverlayScene
+    private let scene: BoardScene
     private let boardNode: SKSpriteNode
     private let playButton: ButtonNode
     private let clearButton: ButtonNode
@@ -32,10 +32,8 @@ class Board {
     let clearBetSound = SKAction.playSoundFileNamed("Scrape.wav", waitForCompletion: false)
     let winSound = SKAction.playSoundFileNamed("Ka-Ching.wav", waitForCompletion: false)
     let lostSound = SKAction.playSoundFileNamed("Error.wav", waitForCompletion: false)
-    
-    var playHandler: (()->())?
-    
-    init(scene: OverlayScene) {
+        
+    init(scene: BoardScene) {
         self.scene = scene
         
         boardNode = SKSpriteNode(imageNamed: "board")
@@ -164,13 +162,11 @@ class Board {
     func playButtonPressed() {
         
         if getWagers() > 0 {
-
-            let hideBoard = SKAction.moveBy(CGVector(dx: 0,dy: -1000), duration: 0.5)
-            layer.runAction(hideBoard)
-            
-            playHandler!()
+            scene.presentGameScene()
             selectedSquares = []
         }
+        
+        
     }
     
     func getWiningSquares(row: Int, column: Int) {

@@ -1,16 +1,15 @@
 //
-//  OverlayScene.swift
+//  BoardScene.swift
 //  Beto
 //
-//  Created by Jem on 3/10/16.
+//  Created by Jem on 4/9/16.
 //  Copyright © 2016 redgarage. All rights reserved.
 //
 
 import Foundation
-
 import SpriteKit
 
-class OverlayScene: SKScene {
+class BoardScene: SKScene {
     var board: Board!
     var gameHUD: GameHUD!
     var boardLayer: SKNode!
@@ -27,19 +26,35 @@ class OverlayScene: SKScene {
         
         GameData.showUnlockedCoinHandler = showUnlockedCoin
         
+        let background = SKSpriteNode(imageNamed: "menuBackground")
+        background.size = self.frame.size
+        addChild(background)
+        
         board = Board(scene: self)
         boardLayer = board.createBoardLayer()
         
         gameHUD = GameHUD(scene: self)
         gameHUDLayer = gameHUD.createLayer()
         
-        
         addChild(gameHUDLayer)
         addChild(boardLayer)
     }
     
-    func showUnlockedCoin() {        
+    func showUnlockedCoin() {
         let reward = Rewards()
         addChild(reward.createRewardsLayer())
     }
+    
+    func presentGameScene() {
+        self.view!.window!.rootViewController!.performSegueWithIdentifier("showGameScene", sender: self)
+    }
+    
+    func presentMenuScene() {
+        let transition = SKTransition.flipVerticalWithDuration(0.4)
+        let menuScene = MenuScene(size: self.size)
+        menuScene.scaleMode = .AspectFill
+        
+        view!.presentScene(menuScene, transition: transition)
+    }
 }
+
