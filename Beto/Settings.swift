@@ -27,11 +27,22 @@ class Settings {
         closeButton.size = CGSize(width: 44, height: 45)
         closeButton.position = CGPoint(x: 60, y: -100)
         
-        soundButton = ButtonNode(defaultButtonImage: "soundButton")
+        var soundImage = "soundButton"
+        var musicImage = "musicButton"
+        
+        if Audio.soundMuted {
+            soundImage = "soundButton_mute"
+        }
+        
+        if Audio.musicMuted {
+            musicImage = "musicButton_mute"
+        }
+        
+        soundButton = ButtonNode(defaultButtonImage: soundImage)
         soundButton.size = CGSize(width: 44, height: 45)
         soundButton.position = CGPoint(x: 0, y: -160)
         
-        musicButton = ButtonNode(defaultButtonImage: "musicButton")
+        musicButton = ButtonNode(defaultButtonImage: musicImage)
         musicButton.size = CGSize(width: 44, height: 45)
         musicButton.position = CGPoint(x: 60, y: -160)
     }
@@ -68,10 +79,22 @@ class Settings {
     }
     
     func toggleSound() {
-        soundButton.changeTexture("soundButton_mute")
+        if !Audio.soundMuted {
+            soundButton.changeTexture("soundButton_mute")
+        } else {
+            soundButton.changeTexture("soundButton")
+        }
+        
+        Audio.soundMuted = !Audio.soundMuted
     }
     
     func toggleMusic() {
-        musicButton.changeTexture("musicButton_mute")
+        if !Audio.musicMuted {
+            musicButton.changeTexture("musicButton_mute")
+        } else {
+            musicButton.changeTexture("musicButton")
+        }
+        
+        Audio.musicMuted = !Audio.musicMuted
     }
 }

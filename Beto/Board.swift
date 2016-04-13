@@ -26,12 +26,6 @@ class Board {
     private var selectedSquares: [Square] = []
     
     var winningSquares = [Square]()
-
-    
-    let placeBetSound = SKAction.playSoundFileNamed("Chomp.wav", waitForCompletion: false)
-    let clearBetSound = SKAction.playSoundFileNamed("Scrape.wav", waitForCompletion: false)
-    let winSound = SKAction.playSoundFileNamed("Ka-Ching.wav", waitForCompletion: false)
-    let lostSound = SKAction.playSoundFileNamed("Error.wav", waitForCompletion: false)
         
     init(scene: BoardScene) {
         self.scene = scene
@@ -106,7 +100,7 @@ class Board {
         let coinsAvailable = GameData.coins - getWagers()
         
         if !selectedSquares.contains(square) && selectedSquares.count >= 3 {
-            scene.runAction(lostSound)
+            scene.runAction(Audio.lostSound)
             
             let testNode = SKLabelNode(text: "Select up to 3 colors!")
             testNode.fontSize = 30
@@ -133,13 +127,13 @@ class Board {
             
             let coins = GameData.coins - getWagers()
             scene.gameHUD.coinsLabel.text = "\(coins)"
-            scene.runAction(placeBetSound)
+            scene.runAction(Audio.placeBetSound)
             
             square.label.hidden = false
             square.label.text = "\(square.wager)"
         }
         else {
-            scene.runAction(lostSound)
+            scene.runAction(Audio.lostSound)
             
             let testNode = SKLabelNode(text: "Not enough coins!")
             testNode.fontSize = 30
@@ -153,20 +147,14 @@ class Board {
             
             let fade = SKAction.fadeOutWithDuration(1.0)
             testNode.runAction(fade)
-            
-            
-            
         }
     }
     
     func playButtonPressed() {
-        
         if getWagers() > 0 {
             scene.presentGameScene()
             selectedSquares = []
         }
-        
-        
     }
     
     func getWiningSquares(row: Int, column: Int) {
@@ -191,7 +179,7 @@ class Board {
             }
             // add winnings
             GameData.coins += winningSquares.last!.wager
-            scene.runAction(winSound)
+            scene.runAction(Audio.winSound)
             
             // Update labels
             let coins = GameData.coins - getWagers()
@@ -210,7 +198,7 @@ class Board {
                         
                         GameData.coins -= square.wager
                         
-                        scene.runAction(lostSound)
+                        scene.runAction(Audio.lostSound)
                         
                         let scaleAction = SKAction.scaleTo(0.0, duration: 0.3)
                         scaleAction.timingMode = .EaseOut
@@ -263,7 +251,7 @@ class Board {
             }
         }
         
-        scene.runAction(clearBetSound)
+        scene.runAction(Audio.clearBetSound)
         let coins = GameData.coins - getWagers()
         scene.gameHUD.coinsLabel.text = "\(coins)"
     }

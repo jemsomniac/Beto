@@ -9,15 +9,7 @@
 import SpriteKit
 
 class MenuScene: SKScene {
-    
-    let placeBetSound = SKAction.playSoundFileNamed("Chomp.wav", waitForCompletion: false)
-    let clearBetSound = SKAction.playSoundFileNamed("Scrape.wav", waitForCompletion: false)
-    let winSound = SKAction.playSoundFileNamed("Ka-Ching.wav", waitForCompletion: false)
-    let lostSound = SKAction.playSoundFileNamed("Error.wav", waitForCompletion: false)
-    
-    var startGameButton: StartGameNode?
-
-    
+            
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder) is not used in this app")
     }
@@ -31,34 +23,40 @@ class MenuScene: SKScene {
         background.size = self.frame.size
         addChild(background)
         
-  
-        let startGameButton = StartGameNode(defaultButtonImage: "startGame", activeButtonImage: "startGame_active")
+        // Start Game Button
+        let startGameButton = ButtonNode(defaultButtonImage: "startGame", activeButtonImage: "startGame_active")
         startGameButton.size = CGSize(width: 86, height: 103)
         startGameButton.action = presentBoardScene
+        
+        let rotR = SKAction.rotateByAngle(0.15, duration: 0.2)
+        let rotL = SKAction.rotateByAngle(-0.15, duration: 0.2)
+        let pause = SKAction.rotateByAngle(0, duration: 1.0)
+        let cycle = SKAction.sequence([pause, rotR, rotL, rotL, rotR])
+        let wobble = SKAction.repeatActionForever(cycle)
+        startGameButton.runAction(wobble, withKey: "wobble")
+        
         addChild(startGameButton)
         
+        // Customize Button
         let customizeButton = ButtonNode(defaultButtonImage: "customizeButton")
         customizeButton.size = CGSize(width: 44, height: 45)
         customizeButton.position = CGPoint(x: -60, y: -100)
         addChild(customizeButton)
         
+        // Achievements Button
         let achievementsButton = ButtonNode(defaultButtonImage: "achievementsButton")
         achievementsButton.size = CGSize(width: 44, height: 45)
         achievementsButton.position = CGPoint(x: 0, y: -100)
         achievementsButton.action = displayAchievements
         addChild(achievementsButton)
         
+        // Settings Button
         let settingsButton = ButtonNode(defaultButtonImage: "settingsButton")
         settingsButton.size = CGSize(width: 44, height: 45)
         settingsButton.position = CGPoint(x: 60, y: -100)
         settingsButton.action = displaySettings
         addChild(settingsButton)
     }
-    
-//    func presentGameScene() {
-//        self.view!.window!.rootViewController!.performSegueWithIdentifier("showGameScene", sender: self)
-//    }
-//    
     
     func presentBoardScene() {
         let transition = SKTransition.flipVerticalWithDuration(0.4)

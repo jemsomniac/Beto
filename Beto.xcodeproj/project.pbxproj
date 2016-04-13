@@ -32,6 +32,7 @@
 		B94F77991C645C7D00B3A78C /* Scrape.wav in Resources */ = {isa = PBXBuildFile; fileRef = B94F77931C645C7D00B3A78C /* Scrape.wav */; };
 		B950AF9C1C8A50EE00A74054 /* Coin.swift in Sources */ = {isa = PBXBuildFile; fileRef = B950AF9B1C8A50EE00A74054 /* Coin.swift */; };
 		B969C0FC1C7E8B2A00B24CDB /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B969C0FB1C7E8B2A00B24CDB /* Constant.swift */; };
+		B973BA101CBE3A0700FF90F9 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B973BA0F1CBE3A0700FF90F9 /* AudioManager.swift */; };
 		B981110F1C7D650600E118EC /* GameData.plist in Resources */ = {isa = PBXBuildFile; fileRef = B981110E1C7D650600E118EC /* GameData.plist */; };
 		B982DFC91C9266ED00D89ED5 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B982DFC81C9266ED00D89ED5 /* MenuViewController.swift */; };
 		B982E8FC1CB8DC5B00700002 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = B982E8FB1CB8DC5B00700002 /* Store.swift */; };
@@ -42,7 +43,6 @@
 		B9CDB80F1CB8593C00BC8A57 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CDB80E1CB8593C00BC8A57 /* Settings.swift */; };
 		B9CDB8111CB86D1100BC8A57 /* Achievements.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CDB8101CB86D1100BC8A57 /* Achievements.swift */; };
 		B9F1D2701C7571BC00E242F7 /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F1D26F1C7571BC00E242F7 /* MenuScene.swift */; };
-		B9F1D2781C7599DB00E242F7 /* StartGameNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F1D2771C7599DB00E242F7 /* StartGameNode.swift */; };
 		B9F1D27A1C75AE6700E242F7 /* ButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F1D2791C75AE6700E242F7 /* ButtonNode.swift */; };
 /* End PBXBuildFile section */
 
@@ -95,6 +95,7 @@
 		B94F77931C645C7D00B3A78C /* Scrape.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Scrape.wav; sourceTree = "<group>"; };
 		B950AF9B1C8A50EE00A74054 /* Coin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coin.swift; sourceTree = "<group>"; };
 		B969C0FB1C7E8B2A00B24CDB /* Constant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		B973BA0F1CBE3A0700FF90F9 /* AudioManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		B981110E1C7D650600E118EC /* GameData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = GameData.plist; sourceTree = "<group>"; };
 		B982DFC81C9266ED00D89ED5 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		B982E8FB1CB8DC5B00700002 /* Store.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
@@ -105,7 +106,6 @@
 		B9CDB80E1CB8593C00BC8A57 /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		B9CDB8101CB86D1100BC8A57 /* Achievements.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Achievements.swift; sourceTree = "<group>"; };
 		B9F1D26F1C7571BC00E242F7 /* MenuScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
-		B9F1D2771C7599DB00E242F7 /* StartGameNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartGameNode.swift; sourceTree = "<group>"; };
 		B9F1D2791C75AE6700E242F7 /* ButtonNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonNode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -198,9 +198,7 @@
 				B94F77841C64254000B3A78C /* Array2D.swift */,
 				B94F77861C64265F00B3A78C /* Board.swift */,
 				B94F77801C641CA600B3A78C /* Square.swift */,
-				B9F1D2771C7599DB00E242F7 /* StartGameNode.swift */,
 				B9F1D2791C75AE6700E242F7 /* ButtonNode.swift */,
-				B93465A11C7D2B32008CDA26 /* GameDataManager.swift */,
 				B969C0FB1C7E8B2A00B24CDB /* Constant.swift */,
 				B950AF9B1C8A50EE00A74054 /* Coin.swift */,
 				B9C7E2C31C8B88A300879014 /* CoinVault.swift */,
@@ -211,6 +209,8 @@
 				B9CDB80E1CB8593C00BC8A57 /* Settings.swift */,
 				B9CDB8101CB86D1100BC8A57 /* Achievements.swift */,
 				B982E8FB1CB8DC5B00700002 /* Store.swift */,
+				B93465A11C7D2B32008CDA26 /* GameDataManager.swift */,
+				B973BA0F1CBE3A0700FF90F9 /* AudioManager.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -391,6 +391,7 @@
 				B947ABA01C9124FF00720E2F /* Rewards.swift in Sources */,
 				B94F77811C641CA600B3A78C /* Square.swift in Sources */,
 				B982E8FC1CB8DC5B00700002 /* Store.swift in Sources */,
+				B973BA101CBE3A0700FF90F9 /* AudioManager.swift in Sources */,
 				B9F1D2701C7571BC00E242F7 /* MenuScene.swift in Sources */,
 				B969C0FC1C7E8B2A00B24CDB /* Constant.swift in Sources */,
 				B94F77851C64254000B3A78C /* Array2D.swift in Sources */,
@@ -402,7 +403,6 @@
 				B94F77871C64265F00B3A78C /* Board.swift in Sources */,
 				B9CDB8111CB86D1100BC8A57 /* Achievements.swift in Sources */,
 				B982DFC91C9266ED00D89ED5 /* MenuViewController.swift in Sources */,
-				B9F1D2781C7599DB00E242F7 /* StartGameNode.swift in Sources */,
 				00543B011C92AD44006C3B52 /* Boundary.swift in Sources */,
 				B93465A21C7D2B32008CDA26 /* GameDataManager.swift in Sources */,
 				B94F774B1C63FB7F00B3A78C /* AppDelegate.swift in Sources */,

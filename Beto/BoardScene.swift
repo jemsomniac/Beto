@@ -15,6 +15,9 @@ class BoardScene: SKScene {
     var boardLayer: SKNode!
     var gameHUDLayer: SKNode!
     
+    var backgroundMusic = SKAudioNode(fileNamed: "Mining by Moonlight.mp3")
+
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder) is not used in this app")
     }
@@ -40,6 +43,14 @@ class BoardScene: SKScene {
         addChild(boardLayer)
     }
     
+    override func didMoveToView(view: SKView) {
+        if !Audio.musicMuted {
+            runAction(SKAction.waitForDuration(0.5), completion: {
+                self.addChild(self.backgroundMusic)
+            })
+        }
+    }
+    
     func showUnlockedCoin() {
         let reward = Rewards()
         addChild(reward.createRewardsLayer())
@@ -50,6 +61,7 @@ class BoardScene: SKScene {
     }
     
     func presentMenuScene() {
+        
         let transition = SKTransition.flipVerticalWithDuration(0.4)
         let menuScene = MenuScene(size: self.size)
         menuScene.scaleMode = .AspectFill

@@ -10,6 +10,7 @@ import SpriteKit
 
 let BetValues = [1, 5, 10, 50, 100, 1000, 10000, 100000]
 let GameData = GameDataManager()
+let Audio = AudioManager()
 
 struct Constant {
     static let Margin: CGFloat = 10
