@@ -28,7 +28,7 @@ class BoardScene: SKScene {
         
         GameData.showUnlockedCoinHandler = showUnlockedCoin
         
-        let background = SKSpriteNode(imageNamed: "menuBackground")
+        let background = SKSpriteNode(imageNamed: "background")
         background.size = self.frame.size
         addChild(background)
         

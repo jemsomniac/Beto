@@ -28,6 +28,11 @@ class Coin: ButtonNode {
         
         super.init(defaultButtonImage: sprite, activeButtonImage: sprite)
         
+        if (sprite != "coinLocked") {
+            activeButton.color = UIColor.blackColor()
+            activeButton.colorBlendFactor = 0.3
+        }
+        
         self.action = coinPressed
     }
     

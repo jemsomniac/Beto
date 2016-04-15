@@ -37,8 +37,8 @@
 		B982DFC91C9266ED00D89ED5 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B982DFC81C9266ED00D89ED5 /* MenuViewController.swift */; };
 		B982E8FC1CB8DC5B00700002 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = B982E8FB1CB8DC5B00700002 /* Store.swift */; };
 		B988697B1CB99CFE0017577D /* BoardScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B988697A1CB99CFE0017577D /* BoardScene.swift */; };
-		B99C99031C89A44000EAB370 /* Coins.atlas in Resources */ = {isa = PBXBuildFile; fileRef = B99C99021C89A44000EAB370 /* Coins.atlas */; };
 		B9A3BA4C1C6470C00006400D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B9A3BA4B1C6470C00006400D /* Assets.xcassets */; };
+		B9B17AB31CC0FC610000B528 /* Coins.atlas in Resources */ = {isa = PBXBuildFile; fileRef = B9B17AB21CC0FC610000B528 /* Coins.atlas */; };
 		B9C7E2C41C8B88A300879014 /* CoinVault.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C7E2C31C8B88A300879014 /* CoinVault.swift */; };
 		B9CDB80F1CB8593C00BC8A57 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CDB80E1CB8593C00BC8A57 /* Settings.swift */; };
 		B9CDB8111CB86D1100BC8A57 /* Achievements.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CDB8101CB86D1100BC8A57 /* Achievements.swift */; };
@@ -100,8 +100,8 @@
 		B982DFC81C9266ED00D89ED5 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		B982E8FB1CB8DC5B00700002 /* Store.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		B988697A1CB99CFE0017577D /* BoardScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardScene.swift; sourceTree = "<group>"; };
-		B99C99021C89A44000EAB370 /* Coins.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Coins.atlas; sourceTree = "<group>"; };
 		B9A3BA4B1C6470C00006400D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = Sounds/Assets.xcassets; sourceTree = "<group>"; };
+		B9B17AB21CC0FC610000B528 /* Coins.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Coins.atlas; sourceTree = "<group>"; };
 		B9C7E2C31C8B88A300879014 /* CoinVault.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinVault.swift; sourceTree = "<group>"; };
 		B9CDB80E1CB8593C00BC8A57 /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		B9CDB8101CB86D1100BC8A57 /* Achievements.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Achievements.swift; sourceTree = "<group>"; };
@@ -163,7 +163,7 @@
 				B94F778A1C642D2100B3A78C /* Controller */,
 				B94F778D1C645C7D00B3A78C /* Sounds */,
 				B9A3BA4B1C6470C00006400D /* Assets.xcassets */,
-				B99C99021C89A44000EAB370 /* Coins.atlas */,
+				B9B17AB21CC0FC610000B528 /* Coins.atlas */,
 				B9450B121C804A0100AB5AE3 /* Squares.atlas */,
 				B94F77521C63FB7F00B3A78C /* Main.storyboard */,
 				B94F77571C63FB7F00B3A78C /* LaunchScreen.storyboard */,
@@ -354,7 +354,7 @@
 			files = (
 				B9450B131C804A0200AB5AE3 /* Squares.atlas in Resources */,
 				B981110F1C7D650600E118EC /* GameData.plist in Resources */,
-				B99C99031C89A44000EAB370 /* Coins.atlas in Resources */,
+				B9B17AB31CC0FC610000B528 /* Coins.atlas in Resources */,
 				B94F77991C645C7D00B3A78C /* Scrape.wav in Resources */,
 				B94F77981C645C7D00B3A78C /* Mining by Moonlight.mp3 in Resources */,
 				B94F77951C645C7D00B3A78C /* Drip.wav in Resources */,

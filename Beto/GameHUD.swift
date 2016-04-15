@@ -32,8 +32,8 @@ class GameHUD {
         menuButton.position = CGPoint(x: (-gameHUD.size.width + menuButton.size.width + Constant.Margin) / 2 , y: 0)
         
         // Coins Node
-        coinsNode = ButtonNode(defaultButtonImage: "addCoinsButton")
-        coinsNode.size = CGSize(width: 100, height: 26)
+        coinsNode = ButtonNode(defaultButtonImage: "buyCoinsButton")
+        coinsNode.size = CGSize(width: 100, height: 25)
         coinsNode.position = CGPoint(x: (gameHUD.size.width - coinsNode.size.width) / 2 - Constant.Margin, y: 0)
         
         coinsLabel = SKLabelNode(text: "\(GameData.coins)")
@@ -44,7 +44,7 @@ class GameHUD {
         
         // Highscore Node
         highscoreNode = ButtonNode(defaultButtonImage: "highscoreButton")
-        highscoreNode.size = CGSize(width: 100, height: 26)
+        highscoreNode.size = CGSize(width: 100, height: 25)
         highscoreNode.position = CGPoint(x: coinsNode.position.x - (highscoreNode.size.width + Constant.Margin), y: 0)
         
         highscoreLabel = SKLabelNode(text: "\(GameData.highscore)")

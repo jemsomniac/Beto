@@ -20,6 +20,7 @@ class Board {
     private let boardNode: SKSpriteNode
     private let playButton: ButtonNode
     private let clearButton: ButtonNode
+    private let replayButton: ButtonNode
     private let coinVaultButton: ButtonNode
     
     private let layer = SKNode()
@@ -36,22 +37,29 @@ class Board {
         
         // Play Button
         playButton = ButtonNode(defaultButtonImage: "playButton", activeButtonImage: "playButton_active")
-        playButton.size = CGSize(width: 110, height: 40)
+        playButton.size = CGSize(width: 130, height: 40)
         playButton.position = CGPoint(x: (-boardNode.size.width + playButton.size.width) / 2 + Constant.Margin,
             y: (-boardNode.size.height + playButton.size.height) / 2 + Constant.Margin)
         
         // Clear Button
         clearButton = ButtonNode(defaultButtonImage: "clearButton", activeButtonImage: "clearButton_active")
-        clearButton.size = CGSize(width: 110, height: 40)
+        clearButton.size = CGSize(width: 130, height: 40)
         clearButton.position = CGPoint(x: (boardNode.size.width - clearButton.size.width) / 2 - Constant.Margin,
             y: (-boardNode.size.height + clearButton.size.height) / 2 + Constant.Margin)
+        
+        // Replay Button
+        replayButton = ButtonNode(defaultButtonImage: "replayButton")
+        replayButton.size = CGSize(width: 38, height: 39)
+        replayButton.position = CGPoint(x: (-boardNode.size.width + replayButton.size.width) / 2,
+            y: (boardNode.size.height + replayButton.size.height + Constant.Margin) / 2)
         
         // Coin Vault Button
         coinVaultButton = ButtonNode(defaultButtonImage: "coin\(GameData.defaultBetValue)")
         // DELETE: Because of atlas. Not sure why it has to be this way
-        coinVaultButton.defaultButton.size = CGSize(width: 40, height: 40)
-        coinVaultButton.activeButton.size = CGSize(width: 40, height: 40)
-        coinVaultButton.position = CGPoint(x: 0, y: (-boardNode.size.height + coinVaultButton.size.height) / 2 + Constant.Margin)
+        coinVaultButton.defaultButton.size = CGSize(width: 38, height: 39)
+        coinVaultButton.activeButton.size = CGSize(width: 38, height: 39)
+        coinVaultButton.position = CGPoint(x: (boardNode.size.width - coinVaultButton.size.width) / 2,
+            y: (boardNode.size.height + coinVaultButton.size.height + Constant.Margin) / 2)
         
         // Squares creation
         var colors = [Color.Blue, Color.Red, Color.Green, Color.Yellow, Color.Cyan, Color.Purple]
@@ -66,7 +74,7 @@ class Board {
                 square.position = pointForColumn(column, row: row)
         
                 squares[column, row] = square
-                index+=1
+                index += 1
             }
         }
     }
@@ -75,6 +83,7 @@ class Board {
         // Add actions
         playButton.action = playButtonPressed
         clearButton.action = clearButtonPressed
+        replayButton.action = replayButtonPressed
         coinVaultButton.action = coinVaultButtonPressed
         
         // Add action to square and add each square to boardNode
@@ -89,6 +98,7 @@ class Board {
         
         boardNode.addChild(playButton)
         boardNode.addChild(clearButton)
+        boardNode.addChild(replayButton)
         boardNode.addChild(coinVaultButton)
         
         layer.addChild(boardNode)
@@ -103,7 +113,7 @@ class Board {
             scene.runAction(Audio.lostSound)
             
             let testNode = SKLabelNode(text: "SELECT UP TO 3 COLORS!")
-            testNode.fontSize = 24
+            testNode.fontSize = 18
             testNode.color = SKColor.blueColor()
             testNode.colorBlendFactor = 1
             testNode.fontName = "Futura-Medium"
@@ -136,7 +146,7 @@ class Board {
             scene.runAction(Audio.lostSound)
             
             let testNode = SKLabelNode(text: "NOT ENOUGH COINS!")
-            testNode.fontSize = 24
+            testNode.fontSize = 18
             testNode.color = SKColor.blueColor()
             testNode.colorBlendFactor = 1
             testNode.fontName = "Futura-Medium"
@@ -157,37 +167,39 @@ class Board {
         }
     }
     
+    func replayButtonPressed() {
+        // re-select winning squares
+//        if !selectedSquares.contains(winningSquares.last!) {
+//            print(selectedSquares.count)
+//            selectedSquares.append(winningSquares.last!)
+//            print("added winning selectedsquare")
+//            print(selectedSquares.count)
+//            
+//        }
+    }
+    
     func getWiningSquares(row: Int, column: Int) {
         let square = squareAtColumn(column, row: row)
         winningSquares.append(square)
+        
         print("\(square.color) - \(square.wager)")
     }
     
     func handleResults() {
-        //Reselect , Add winning to total , udpate labels
-        
         if winningSquares.last?.wager > 0 {
-            // re-select winning squares
-            if !selectedSquares.contains(winningSquares.last!) {
-                print(selectedSquares.count)
-                selectedSquares.append(winningSquares.last!)
-                print("added winning selectedsquare")
-                print(selectedSquares.count)
-                
-            }
-            // add winnings
+            // Add winnings
             GameData.coins += winningSquares.last!.wager
             scene.runAction(Audio.winSound)
             
             // Update labels
             let coins = GameData.coins - getWagers()
             scene.gameHUD.coinsLabel.text = "\(coins)"
-            scene.gameHUD.highscoreLabel.text = "\(GameData.highscore)" //TODO: Ask Jem if OK to delete?
+            scene.gameHUD.highscoreLabel.text = "\(GameData.highscore)"
         }
     
         if winningSquares.count == 3 {
 
-            // Remove wagers from winning squares
+            // Remove wagers from losing squares
             for row in 0..<Rows {
                 for column in 0..<Columns {
                     let square = squareAtColumn(column, row: row)
@@ -196,18 +208,18 @@ class Board {
                         
                         GameData.coins -= square.wager
                         
-                        scene.runAction(Audio.lostSound)
-                        
-                        let scaleAction = SKAction.scaleTo(0.0, duration: 0.3)
-                        scaleAction.timingMode = .EaseOut
-                        
-                        square.label.runAction(scaleAction)
-                        
+//                        let scaleAction = SKAction.scaleTo(0.0, duration: 0.3)
+//                        scaleAction.timingMode = .EaseOut
+//                        square.label.runAction(scaleAction)
+       
                         square.label.hidden = true
-                        let restore = SKAction.scaleTo(1.0, duration: 0.3)
-                        square.label.runAction(restore)
+
+//                        let restore = SKAction.scaleTo(1.0, duration: 0.3)
+//                        square.label.runAction(restore)
                         
                         square.wager = 0
+                        
+                        scene.runAction(Audio.lostSound)
                     }
                 }
             }
@@ -250,14 +262,10 @@ class Board {
 
     func coinVaultButtonPressed() {
         let coinVault = CoinVault()
-        coinVault.changeBetValueHandler = changeVaultButtonTexture
+        coinVault.changeBetValueHandler = { self.coinVaultButton.changeTexture("coin\(GameData.defaultBetValue)") }
         
         let vaultLayer = coinVault.createVaultLayer()
         scene.addChild(vaultLayer)
-    }
-    
-    func changeVaultButtonTexture() {
-        coinVaultButton.changeTexture("coin\(GameData.defaultBetValue)")
     }
     
     func squareAtColumn(column: Int, row: Int) -> Square {
