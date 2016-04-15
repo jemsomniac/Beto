@@ -50,5 +50,13 @@ class MenuViewController: UIViewController {
         skView.presentScene(scene)
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if let boardScene = sender as? BoardScene {
+            if segue.identifier == "showGameScene" {
+                let destinationVC = segue.destinationViewController as! GameViewController
+                destinationVC.boardScene = boardScene
+            }
+        }
+    }
 
 }

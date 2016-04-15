@@ -102,11 +102,11 @@ class Board {
         if !selectedSquares.contains(square) && selectedSquares.count >= 3 {
             scene.runAction(Audio.lostSound)
             
-            let testNode = SKLabelNode(text: "Select up to 3 colors!")
-            testNode.fontSize = 30
+            let testNode = SKLabelNode(text: "SELECT UP TO 3 COLORS!")
+            testNode.fontSize = 24
             testNode.color = SKColor.blueColor()
             testNode.colorBlendFactor = 1
-            testNode.fontName = "Helvetica-Bold"
+            testNode.fontName = "Futura-Medium"
             testNode.blendMode = SKBlendMode.Multiply
             testNode.colorBlendFactor = 0.6
             testNode.position = CGPoint(x: (0), y: (boardNode.size.height) / 2 + Constant.Margin)
@@ -135,11 +135,11 @@ class Board {
         else {
             scene.runAction(Audio.lostSound)
             
-            let testNode = SKLabelNode(text: "Not enough coins!")
-            testNode.fontSize = 30
+            let testNode = SKLabelNode(text: "NOT ENOUGH COINS!")
+            testNode.fontSize = 24
             testNode.color = SKColor.blueColor()
             testNode.colorBlendFactor = 1
-            testNode.fontName = "Helvetica-Bold"
+            testNode.fontName = "Futura-Medium"
             testNode.blendMode = SKBlendMode.Multiply
             testNode.colorBlendFactor = 0.6
             testNode.position = CGPoint(x: (0), y: (boardNode.size.height) / 2 + Constant.Margin)
@@ -164,8 +164,6 @@ class Board {
     }
     
     func handleResults() {
-
-        
         //Reselect , Add winning to total , udpate labels
         
         if winningSquares.last?.wager > 0 {
@@ -225,12 +223,6 @@ class Board {
         }
     }
     
-    
-    func showBoard() {
-        let moveBoardUp = SKAction.moveTo(CGPoint(x: 0,y: 0), duration: 0.25)
-        layer.runAction(moveBoardUp)
-    }
-
     func clearButtonPressed() {
         // Set wagers to 0
         for row in 0..<Rows {

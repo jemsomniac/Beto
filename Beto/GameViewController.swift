@@ -14,6 +14,7 @@ import SpriteKit
 class GameViewController: UIViewController {
     
     var gameScene: GameScene! // SCNScene
+    var boardScene: BoardScene!
 
     var panGesture = UIPanGestureRecognizer.self()
     var tapGesture = UITapGestureRecognizer.self()
@@ -42,10 +43,10 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
  
-        //Configure the scene
+        // Configure the scene
         gameScene = GameScene()
 
-        //Configure the view
+        // Configure the view
         let sceneView = self.view as! SCNView
         sceneView.scene = gameScene
         sceneView.delegate = gameScene
@@ -53,6 +54,14 @@ class GameViewController: UIViewController {
         sceneView.backgroundColor = UIColor.blackColor()
         sceneView.antialiasingMode = SCNAntialiasingMode.Multisampling4X
         
+        // Configure the background
+        let sceneMaterials = SCNMaterial()
+        sceneMaterials.diffuse.contents = boardScene
+        sceneMaterials.locksAmbientWithDiffuse = false
+        gameScene.geometryNodes.floorNode.geometry!.materials = [sceneMaterials]
+        gameScene.geometryNodes.floorNode.geometry!.firstMaterial = sceneMaterials
+
+        // Configure the gestures
         panGesture = UIPanGestureRecognizer(target: self, action: #selector(GameViewController.handlePan(_:)))
         view.addGestureRecognizer(panGesture)
 
@@ -77,7 +86,7 @@ class GameViewController: UIViewController {
                     node.physicsBody!.applyForce(SCNVector3(translationX/17,(-translationY/130)+9,(translationY/5)-11), impulse: true) //MIN (0,17,-31) MAX (0,21,-65)
                 }
                 
-                touchCount+=1
+                touchCount += 1
             }
         } else if touchCount == 2 {
             gameScene.winningSquares = []
@@ -87,63 +96,61 @@ class GameViewController: UIViewController {
     }
 
     func cubeRestHandler() {
+        var row = Int()
+        var column = Int()
         
-//        if didNotRunYet {
-            
-//            var row = Int()
-//            var column = Int()
-//            
-//            if gameScene.winningSquares.last == "Yellow" {
-//                row = 1
-//                column = 0
-//            } else if gameScene.winningSquares.last == "Cyan" {
-//                row = 1
-//                column = 1
-//            } else if gameScene.winningSquares.last == "Purple" {
-//                row = 1
-//                column = 2
-//            } else if gameScene.winningSquares.last == "Blue" {
-//                row = 0
-//                column = 0
-//            } else if gameScene.winningSquares.last == "Red" {
-//                row = 0
-//                column = 1
-//            } else if gameScene.winningSquares.last == "Green" {
-//                row = 0
-//                column = 2
-//            }
-        
-//            overlayScene.board.getWiningSquares(row, column: column)
-//            overlayScene.board.handleResults()
-        
+        if gameScene.winningSquares.last == "Yellow" {
+            row = 1
+            column = 0
+        } else if gameScene.winningSquares.last == "Cyan" {
+            row = 1
+            column = 1
+        } else if gameScene.winningSquares.last == "Purple" {
+            row = 1
+            column = 2
+        } else if gameScene.winningSquares.last == "Blue" {
+            row = 0
+            column = 0
+        } else if gameScene.winningSquares.last == "Red" {
+            row = 0
+            column = 1
+        } else if gameScene.winningSquares.last == "Green" {
+            row = 0
+            column = 2
+        }
+    
+        boardScene.board.getWiningSquares(row, column: column)
+        boardScene.board.handleResults()
         
         if gameScene.winningSquares.count == 3 {
-                touchCount = 0
-                self.view.gestureRecognizers = []
+            touchCount = 0
+            self.view.gestureRecognizers = []
                 
-                let triggerTime = (Int64(NSEC_PER_SEC) * 1) //Note: Delay needed for cubes to be removed first
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, triggerTime), dispatch_get_main_queue(), { () -> Void in
-                    self.delayCubeRest()
+            let triggerTime = (Int64(NSEC_PER_SEC) * 1) //Note: Delay needed for cubes to be removed first
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, triggerTime), dispatch_get_main_queue(),
+                { () -> Void in
+                    self.gameScene.geometryNodes.addCubesTo(self.gameScene.geometryNodes.cubesNode)
+                    self.gameScene.resetCubes()
                 })
+            
+            view.window?.rootViewController?.dismissViewControllerAnimated(true, completion: nil)
         }
-        
-        view.window?.rootViewController?.dismissViewControllerAnimated(true, completion: nil)
-
     }
     
-    func delayCubeRest() {
-        self.gameScene.geometryNodes.addCubesTo(self.gameScene.geometryNodes.cubesNode)
-        self.gameScene.resetCubes()
-    }
-    
-    func delay(delay:Double, closure:()->()) {
-        dispatch_after(
-            dispatch_time(
-                DISPATCH_TIME_NOW,
-                Int64(delay * Double(NSEC_PER_SEC))
-            ),
-            dispatch_get_main_queue(), closure)
-    }
+//    func delayCubeRest() {
+//        self.gameScene.geometryNodes.addCubesTo(self.gameScene.geometryNodes.cubesNode)
+//        self.gameScene.resetCubes()
+//    }
+//
+//    func delay(delay:Double, closure:()->()) {
+//        dispatch_after(
+//            dispatch_time(
+//                DISPATCH_TIME_NOW,
+//                Int64(delay * Double(NSEC_PER_SEC))
+//            ),
+//            dispatch_get_main_queue(), closure)
+//    }
     
     func handleTap(gesture:UITapGestureRecognizer) {
         //TODO: Cancel gesture

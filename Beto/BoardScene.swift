@@ -17,7 +17,6 @@ class BoardScene: SKScene {
     
     var backgroundMusic = SKAudioNode(fileNamed: "Mining by Moonlight.mp3")
 
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder) is not used in this app")
     }
@@ -61,7 +60,6 @@ class BoardScene: SKScene {
     }
     
     func presentMenuScene() {
-        
         let transition = SKTransition.flipVerticalWithDuration(0.4)
         let menuScene = MenuScene(size: self.size)
         menuScene.scaleMode = .AspectFill

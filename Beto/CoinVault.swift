@@ -35,7 +35,7 @@ class CoinVault {
         
         closeButton = ButtonNode(defaultButtonImage: "closeButton")
         // DELETE: Change position to dynamic values
-        closeButton.position = CGPoint(x: 144, y: 74)
+        closeButton.position = CGPoint(x: 140, y: 74)
         
         var index = 0
         

@@ -17,11 +17,8 @@ class GeometryNodes {
     let floorNode = SCNNode()
     let cameraNode = SCNNode()
     let cubesNode = SCNNode()
-    
     let boundary = Boundary()
 
-
-    
     init () {
         let floorMaterial = SCNMaterial()
         floorMaterial.diffuse.contents = UIImage(named: "background")!

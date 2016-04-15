@@ -11,13 +11,12 @@ import SpriteKit
 
 class GameHUD {
     let layer = SKNode()
-
+    
+    let scene: SKScene
     let gameHUD: SKSpriteNode
+    let menuButton: ButtonNode
     let coinsNode: ButtonNode
     let highscoreNode: ButtonNode
-    let menuButton: ButtonNode
-    let scene: SKScene
-    
     let coinsLabel: SKLabelNode
     let highscoreLabel: SKLabelNode
     
@@ -60,7 +59,6 @@ class GameHUD {
 
         // Add actions
         menuButton.action = presentMenuScene
-
         highscoreNode.action = displayAchievements
         coinsNode.action = displayStore
         
@@ -75,6 +73,14 @@ class GameHUD {
         layer.addChild(gameHUD)
         
         return layer
+    }
+    
+    func presentMenuScene() {
+        let transition = SKTransition.flipVerticalWithDuration(0.4)
+        let menuScene = MenuScene(size: scene.size)
+        menuScene.scaleMode = .AspectFill
+        
+        scene.view!.presentScene(menuScene, transition: transition)
     }
     
     func displayStore() {
@@ -95,14 +101,6 @@ class GameHUD {
         }
         
         GameData.saveGameData()
-    }
-        
-    func presentMenuScene() {
-        let transition = SKTransition.flipVerticalWithDuration(0.4)
-        let menuScene = MenuScene(size: scene.size)
-        menuScene.scaleMode = .AspectFill
-        
-        scene.view!.presentScene(menuScene, transition: transition)
     }
     
     func displayAchievements() {

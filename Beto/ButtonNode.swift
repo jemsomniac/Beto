@@ -38,6 +38,8 @@ class ButtonNode: SKNode {
     
     convenience init(defaultButtonImage: String) {
         self.init(defaultButtonImage: defaultButtonImage, activeButtonImage: defaultButtonImage)
+        activeButton.color = UIColor.blackColor()
+        activeButton.colorBlendFactor = 0.3
     }
     
     required init(coder aDecoder: NSCoder) {
