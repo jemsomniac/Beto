@@ -58,8 +58,9 @@ class GameViewController: UIViewController {
         let sceneMaterials = SCNMaterial()
         sceneMaterials.diffuse.contents = boardScene
         sceneMaterials.locksAmbientWithDiffuse = false
+        sceneMaterials.doubleSided = true
         gameScene.geometryNodes.floorNode.geometry!.materials = [sceneMaterials]
-        gameScene.geometryNodes.floorNode.geometry!.firstMaterial = sceneMaterials
+        gameScene.geometryNodes.floorNode.scale.y = -1
 
         // Configure the gestures
         panGesture = UIPanGestureRecognizer(target: self, action: #selector(GameViewController.handlePan(_:)))
@@ -127,30 +128,23 @@ class GameViewController: UIViewController {
             self.view.gestureRecognizers = []
                 
             let triggerTime = (Int64(NSEC_PER_SEC) * 1) //Note: Delay needed for cubes to be removed first
-            
+
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, triggerTime), dispatch_get_main_queue(),
+                { () -> Void in
+                    self.view.window?.rootViewController?.dismissViewControllerAnimated(true, completion: nil)
+                })
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, triggerTime * 2), dispatch_get_main_queue(),
                 { () -> Void in
                     self.gameScene.geometryNodes.addCubesTo(self.gameScene.geometryNodes.cubesNode)
                     self.gameScene.resetCubes()
                 })
             
-            view.window?.rootViewController?.dismissViewControllerAnimated(true, completion: nil)
         }
+        
+        //NOTE: Use to crash from dismissing the viewController too early, but now crashes after 5 throws ("Message from debugger: Terminated due to memory issue")
+
     }
-    
-//    func delayCubeRest() {
-//        self.gameScene.geometryNodes.addCubesTo(self.gameScene.geometryNodes.cubesNode)
-//        self.gameScene.resetCubes()
-//    }
-//
-//    func delay(delay:Double, closure:()->()) {
-//        dispatch_after(
-//            dispatch_time(
-//                DISPATCH_TIME_NOW,
-//                Int64(delay * Double(NSEC_PER_SEC))
-//            ),
-//            dispatch_get_main_queue(), closure)
-//    }
     
     func handleTap(gesture:UITapGestureRecognizer) {
         //TODO: Cancel gesture

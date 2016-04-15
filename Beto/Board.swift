@@ -186,6 +186,9 @@ class Board {
     }
     
     func handleResults() {
+
+        
+        //Reselect , Add winning to total , udpate labels
         if winningSquares.last?.wager > 0 {
             // Add winnings
             GameData.coins += winningSquares.last!.wager

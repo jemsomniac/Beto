@@ -25,6 +25,7 @@ class GeometryNodes {
         floorMaterial.locksAmbientWithDiffuse = false
         
         floorNode.geometry = SCNBox(width: 2.25, height: 0.5, length: 4, chamferRadius: 0)
+        
         floorNode.position = SCNVector3(0,0,0)
         floorNode.physicsBody = SCNPhysicsBody.staticBody()
         floorNode.name = "Floor"
