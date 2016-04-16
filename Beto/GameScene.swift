@@ -109,9 +109,6 @@ class GameScene: SCNScene, SCNSceneRendererDelegate {
                     print("node removed")
                 }
             }
-            
-            // DELETE
-            print("checkCount")
 
             if geometryNodes.cubesNode.childNodes.count == 0 {
                 shouldCheckMovement = false

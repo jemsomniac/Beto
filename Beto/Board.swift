@@ -25,9 +25,8 @@ class Board {
     
     private let layer = SKNode()
     private var selectedSquares: [Square] = []
+    private var winningSquares: [Square] = []
     
-    var winningSquares = [Square]()
-        
     init(scene: BoardScene) {
         self.scene = scene
         
@@ -39,19 +38,19 @@ class Board {
         playButton = ButtonNode(defaultButtonImage: "playButton", activeButtonImage: "playButton_active")
         playButton.size = CGSize(width: 130, height: 40)
         playButton.position = CGPoint(x: (-boardNode.size.width + playButton.size.width) / 2 + Constant.Margin,
-            y: (-boardNode.size.height + playButton.size.height) / 2 + Constant.Margin)
+                                      y: (-boardNode.size.height + playButton.size.height) / 2 + Constant.Margin)
         
         // Clear Button
         clearButton = ButtonNode(defaultButtonImage: "clearButton", activeButtonImage: "clearButton_active")
         clearButton.size = CGSize(width: 130, height: 40)
         clearButton.position = CGPoint(x: (boardNode.size.width - clearButton.size.width) / 2 - Constant.Margin,
-            y: (-boardNode.size.height + clearButton.size.height) / 2 + Constant.Margin)
+                                       y: (-boardNode.size.height + clearButton.size.height) / 2 + Constant.Margin)
         
         // Replay Button
         replayButton = ButtonNode(defaultButtonImage: "replayButton")
         replayButton.size = CGSize(width: 38, height: 39)
         replayButton.position = CGPoint(x: (-boardNode.size.width + replayButton.size.width) / 2,
-            y: (boardNode.size.height + replayButton.size.height + Constant.Margin) / 2)
+                                        y: (boardNode.size.height + replayButton.size.height + Constant.Margin) / 2)
         
         // Coin Vault Button
         coinVaultButton = ButtonNode(defaultButtonImage: "coin\(GameData.defaultBetValue)")
@@ -59,7 +58,7 @@ class Board {
         coinVaultButton.defaultButton.size = CGSize(width: 38, height: 39)
         coinVaultButton.activeButton.size = CGSize(width: 38, height: 39)
         coinVaultButton.position = CGPoint(x: (boardNode.size.width - coinVaultButton.size.width) / 2,
-            y: (boardNode.size.height + coinVaultButton.size.height + Constant.Margin) / 2)
+                                           y: (boardNode.size.height + coinVaultButton.size.height + Constant.Margin) / 2)
         
         // Squares creation
         var colors = [Color.Blue, Color.Red, Color.Green, Color.Yellow, Color.Cyan, Color.Purple]
@@ -72,7 +71,7 @@ class Board {
                 square.defaultButton.size = CGSize(width: squareSize, height: squareSize)
                 square.activeButton.size = CGSize(width: squareSize, height: squareSize)
                 square.position = pointForColumn(column, row: row)
-        
+                
                 squares[column, row] = square
                 index += 1
             }
@@ -109,6 +108,7 @@ class Board {
     func handlePlaceBet(square: Square) {
         let coinsAvailable = GameData.coins - getWagers()
         
+        // Limit selected squares to 3 colors
         if !selectedSquares.contains(square) && selectedSquares.count >= 3 {
             scene.runAction(Audio.lostSound)
             
@@ -128,6 +128,7 @@ class Board {
             return
         }
         
+        // Check if there are coins available to wager
         if GameData.defaultBetValue <= coinsAvailable  {
             if !selectedSquares.contains(square) {
                 selectedSquares.append(square)
@@ -135,14 +136,15 @@ class Board {
             
             square.wager += GameData.defaultBetValue
             
+            // In order to safe guard from crashes, we don't subtract the coins
+            // from the GameData until after we roll the cubes
             let coins = GameData.coins - getWagers()
             scene.gameHUD.coinsLabel.text = "\(coins)"
             scene.runAction(Audio.placeBetSound)
             
             square.label.hidden = false
             square.label.text = "\(square.wager)"
-        }
-        else {
+        } else {
             scene.runAction(Audio.lostSound)
             
             let testNode = SKLabelNode(text: "NOT ENOUGH COINS!")
@@ -169,73 +171,88 @@ class Board {
     
     func replayButtonPressed() {
         // re-select winning squares
-//        if !selectedSquares.contains(winningSquares.last!) {
-//            print(selectedSquares.count)
-//            selectedSquares.append(winningSquares.last!)
-//            print("added winning selectedsquare")
-//            print(selectedSquares.count)
-//            
-//        }
+        //        if !selectedSquares.contains(winningSquares.last!) {
+        //            print(selectedSquares.count)
+        //            selectedSquares.append(winningSquares.last!)
+        //            print("added winning selectedsquare")
+        //            print(selectedSquares.count)
+        //
+        //        }
+        
+        //  selectedSquares = []
+        
+        // NEED TO IMPLEMENT THIS.
     }
     
-    func getWiningSquares(row: Int, column: Int) {
-        let square = squareAtColumn(column, row: row)
-        winningSquares.append(square)
+    func payout(winningColor: Color) {
+        var winningSquare: Square!
         
-        print("\(square.color) - \(square.wager)")
-    }
-    
-    func handleResults() {
-
-        
-        //Reselect , Add winning to total , udpate labels
-        if winningSquares.last?.wager > 0 {
-            // Add winnings
-            GameData.coins += winningSquares.last!.wager
-            scene.runAction(Audio.winSound)
-            
-            // Update labels
-            let coins = GameData.coins - getWagers()
-            scene.gameHUD.coinsLabel.text = "\(coins)"
-            scene.gameHUD.highscoreLabel.text = "\(GameData.highscore)"
-        }
-    
-        if winningSquares.count == 3 {
-
-            // Remove wagers from losing squares
-            for row in 0..<Rows {
-                for column in 0..<Columns {
-                    let square = squareAtColumn(column, row: row)
+        outerloop: for row in 0..<Rows {
+            for column in 0..<Columns {
+                let square = squareAtColumn(column, row: row)
+                
+                if square.color == winningColor {
+                    winningSquare = square
                     
-                    if square.wager > 0 && !winningSquares.contains(square) {
-                        
-                        GameData.coins -= square.wager
-                        
-//                        let scaleAction = SKAction.scaleTo(0.0, duration: 0.3)
-//                        scaleAction.timingMode = .EaseOut
-//                        square.label.runAction(scaleAction)
-       
-                        square.label.hidden = true
-
-//                        let restore = SKAction.scaleTo(1.0, duration: 0.3)
-//                        square.label.runAction(restore)
-                        
-                        square.wager = 0
-                        
-                        scene.runAction(Audio.lostSound)
+                    if !winningSquares.contains(winningSquare) {
+                        winningSquares.append(winningSquare)
                     }
+                    
+                    break outerloop
                 }
             }
+        }
+        
+        // Add winnings
+        if winningSquare.wager > 0 {
+            GameData.coins += winningSquare.wager
+            scene.runAction(Audio.winSound)
             
-            // Check if there's a new highscore
+            // Update coinslabel
+            scene.gameHUD.coinsLabel.text = "\(GameData.coins)"
+            
+            // Check and update if there's a new highscore
             if GameData.coins > GameData.highscore {
                 GameData.highscore = GameData.coins
                 scene.gameHUD.highscoreLabel.text = "\(GameData.highscore)"
                 GameData.didUnlockCoin()
             }
-            GameData.saveGameData()
-            winningSquares = []
         }
+    }
+    
+    func resolveWagers() {
+        // Add winning wagers back to Game Data, clear the board
+        for row in 0..<Rows {
+            for column in 0..<Columns {
+                let square = squareAtColumn(column, row: row)
+                
+                if winningSquares.contains(square) {
+                    GameData.coins += square.wager
+                }
+                
+                let scaleAction = SKAction.scaleTo(0.0, duration: 0.3)
+                scaleAction.timingMode = .EaseOut
+                square.label.runAction(scaleAction)
+                square.label.hidden = true
+                
+                let restore = SKAction.scaleTo(1.0, duration: 0.3)
+                square.label.runAction(restore)
+                square.wager = 0
+                
+                // Update coinslabel
+                scene.gameHUD.coinsLabel.text = "\(GameData.coins)"
+                
+                // Check and update if there's a new highscore
+                if GameData.coins > GameData.highscore {
+                    GameData.highscore = GameData.coins
+                    scene.gameHUD.highscoreLabel.text = "\(GameData.highscore)"
+                    GameData.didUnlockCoin()
+                }
+            }
+        }
+        
+        GameData.saveGameData()
+        winningSquares = []
     }
     
     func clearButtonPressed() {
@@ -259,10 +276,12 @@ class Board {
         }
         
         scene.runAction(Audio.clearBetSound)
+        
+        // DELETE: Check this code. Dont need getWagers i think
         let coins = GameData.coins - getWagers()
         scene.gameHUD.coinsLabel.text = "\(coins)"
     }
-
+    
     func coinVaultButtonPressed() {
         let coinVault = CoinVault()
         coinVault.changeBetValueHandler = { self.coinVaultButton.changeTexture("coin\(GameData.defaultBetValue)") }
@@ -284,7 +303,7 @@ class Board {
         
         let offsetX = -squareWithMargin + (squareWithMargin * CGFloat(column))
         let offsetY = -squareMargin + (squareWithMargin * CGFloat(row))
-
+        
         return CGPoint(x: offsetX, y: -Constant.Margin + offsetY)
     }
     
