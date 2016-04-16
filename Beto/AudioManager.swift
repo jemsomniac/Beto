@@ -50,6 +50,6 @@ class AudioManager {
     
     init() {
         soundMuted = false
-        musicMuted = false
+        musicMuted = true
     }
 }

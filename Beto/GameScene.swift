@@ -9,20 +9,17 @@
 import SceneKit
 
 class GameScene: SCNScene, SCNSceneRendererDelegate {
-    
-    var didNotRunYet1 = true //dirty - TODO: Delete
-    var didNotRunYet2 = true //dirty - TODO: Delete
-    var didNotRunYet3 = true //dirty - TODO: Delete
-    
-    var geometryNodes = GeometryNodes()
-    var shouldCheckMovement = false
-    var winningSquares = [String]()
 
-    var cubeRestHandler: (()->())?
+    var geometryNodes: GeometryNodes!
+    var shouldCheckMovement = false
+    
+    var cubeRestHandler: ((Color)->())?
+    var endGameplayHandler: (() -> ())?
     
     override init() {
         super.init()
         
+        geometryNodes = GeometryNodes()
         geometryNodes.addNodesTo(rootNode)
     }
 
@@ -31,6 +28,10 @@ class GameScene: SCNScene, SCNSceneRendererDelegate {
     }
     
     func nearlyAtRest(node: SCNNode) -> Bool {
+        if node.physicsBody!.isResting {
+            return true
+        }
+        
         let dx = Float((node.physicsBody?.velocity.x)!)
         let dy = Float((node.physicsBody?.velocity.y)!)
         let dz = Float((node.physicsBody?.velocity.z)!)
@@ -46,111 +47,76 @@ class GameScene: SCNScene, SCNSceneRendererDelegate {
         return (speed < 0.001 || angularSpeed < 0.9)
     }
     
-    func getUpSide(node: SCNNode) -> String {
-        
-        let rotation = node.presentationNode.rotation; //SCNVector4
-        var invRotation = rotation; invRotation.w = -invRotation.w; //SCNVector4
-        
-        let up = SCNVector3Make(0,1,0);
-        
-        //rotate up by invRotation
-        let transform = SCNMatrix4MakeRotation(invRotation.w, invRotation.x, invRotation.y, invRotation.z); //SCNMatrix4
-        let glkTransform = SCNMatrix4ToGLKMatrix4(transform); //GLKMatrix4
-        let glkUp = SCNVector3ToGLKVector3(up); //GLKVector3
-        let rotatedUp = GLKMatrix4MultiplyVector3(glkTransform, glkUp); //GLKVector3
-        
-        //build box normals (arbitrary order here)
-        
-        var boxNormals: [GLKVector3] = [GLKVector3(v: (0,0,1)),
-            GLKVector3(v: (1,0,0)),
-            GLKVector3(v: (0,0,-1)),
-            GLKVector3(v: (-1,0,0)),
-            GLKVector3(v: (0,1,0)),
-            GLKVector3(v: (0,-1,0))]
-        
-        var bestIndex: Int = 0;
-        var maxDot: Float = -1;
-        
-        for  i in 0...5 {
-            let dot: Float = GLKVector3DotProduct( boxNormals[i] , rotatedUp ) ;
-            
-            if(dot > maxDot){
-                maxDot = dot;
-                bestIndex = i;
-            }
-        }
-        
-        var colorUp = ["Yellow", "Cyan", "Purple", "Blue","Red", "Green"]
-        
-        print("NodeName=\(node.name) ; FaceUp=\(colorUp[bestIndex])")
-        return colorUp[bestIndex];
-    }
+//    func resetCubes() {
+//        var count = 0.0
+//    
+//        for node in geometryNodes.cubesNode.childNodes {
+//            node.physicsBody?.velocity = SCNVector3(0,0,0)
+//            node.physicsBody?.angularVelocity = SCNVector4(0,0,0,0)
+//            node.position = SCNVector3((-0.25 * count + 0.17), 0.15, 1.15)
+//            node.eulerAngles = SCNVector3Make(Float(M_PI/2 * Double(arc4random()%4)), Float(M_PI/2 * Double(arc4random()%4)),Float(M_PI/2 * Double(arc4random()%4)))
+//            count += 1
+//        }
+//    }
     
-    
-    func resetCubes() {
-        
-        var count = 0.0
-    
-        for node in geometryNodes.cubesNode.childNodes {
-            node.physicsBody?.velocity = SCNVector3(0,0,0)
-            node.physicsBody?.angularVelocity = SCNVector4(0,0,0,0)
-            node.position = SCNVector3((-0.25*count+0.17),0.15,1.15)
-            node.eulerAngles = SCNVector3Make(Float(M_PI/2 * Double(arc4random()%4)), Float(M_PI/2 * Double(arc4random()%4)),Float(M_PI/2 * Double(arc4random()%4)))
-            count+=1
-        }
-    }
-    
-    func renderer(renderer: SCNSceneRenderer, updateAtTime time: NSTimeInterval) {
+    func renderer(renderer: SCNSceneRenderer, didSimulatePhysicsAtTime time: NSTimeInterval) {
         if shouldCheckMovement {
             for node in geometryNodes.cubesNode.childNodes {
-                if node.physicsBody!.isResting || nearlyAtRest(node) {
+                if nearlyAtRest(node) && !node.hasActions {
+                    // Get the winning color
+                    let rotation: SCNVector4 = node.presentationNode.rotation
+                    var invRotation: SCNVector4 = rotation
+                    invRotation.w = -invRotation.w
                     
-                    var actions = [SCNAction]()
-                    actions.append(SCNAction.fadeOutWithDuration(0.75))
-                    actions.append(SCNAction.removeFromParentNode())
-                    let sequence = SCNAction.sequence(actions)
+                    let up = SCNVector3Make(0,1,0);
                     
-                    //TODO: Need to display text of side up or wagers
-
-                    if node.name == "cube1" && didNotRunYet1 {
-                        node.runAction(sequence)
-                        self.winningSquares.append(self.getUpSide(node))
-                        cubeRestHandler!()
-                        didNotRunYet1 = false
-                    } else if node.name == "cube2" && didNotRunYet2 {
-                        node.runAction(sequence)
-                        self.winningSquares.append(self.getUpSide(node))
-                        cubeRestHandler!()
-                        didNotRunYet2 = false
-                    } else if node.name == "cube3" && didNotRunYet3 {
-                        node.runAction(sequence)
-                        self.winningSquares.append(self.getUpSide(node))
-                        cubeRestHandler!()
-                        didNotRunYet3 = false
+                    let transform: SCNMatrix4 = SCNMatrix4MakeRotation(invRotation.w, invRotation.x, invRotation.y, invRotation.z)
+                    let glkTransform: GLKMatrix4 = SCNMatrix4ToGLKMatrix4(transform)
+                    let glkUp: GLKVector3 = SCNVector3ToGLKVector3(up)
+                    let rotatedUp: GLKVector3 = GLKMatrix4MultiplyVector3(glkTransform, glkUp)
+                    
+                    var boxNormals: [GLKVector3] = [GLKVector3(v: (0,0,1)),
+                                                    GLKVector3(v: (1,0,0)),
+                                                    GLKVector3(v: (0,0,-1)),
+                                                    GLKVector3(v: (-1,0,0)),
+                                                    GLKVector3(v: (0,1,0)),
+                                                    GLKVector3(v: (0,-1,0))]
+                    
+                    var bestIndex: Int = 0;
+                    var maxDot: Float = -1;
+                    
+                    for  i in 0...5 {
+                        let dot: Float = GLKVector3DotProduct( boxNormals[i] , rotatedUp )
+                        
+                        if(dot > maxDot){
+                            maxDot = dot;
+                            bestIndex = i;
+                        }
                     }
+                    
+                    var colors = [Color.Yellow, Color.Cyan, Color.Purple, Color.Blue, Color.Red, Color.Green]
+                    
+                    
+                    // DELETE
+                    print("\(node.name): \(colors[bestIndex])")
+                    
+                    cubeRestHandler!(colors[bestIndex])
+                    
+                    let sequence = SCNAction.sequence([SCNAction.fadeOutWithDuration(0.75), SCNAction.removeFromParentNode()])
+                    node.runAction(sequence)
+                    
+                    // DELETE 
+                    print("node removed")
                 }
             }
+            
+            // DELETE
+            print("checkCount")
+
+            if geometryNodes.cubesNode.childNodes.count == 0 {
+                shouldCheckMovement = false
+                endGameplayHandler!()
+            }
         }
-        
-        if winningSquares.count == 3 {
-            shouldCheckMovement = false
-        }
-        
-        if geometryNodes.cubesNode.childNodes.count == 0 {
-            print("all 3 cubes are gone")
-            didNotRunYet1 = true
-            didNotRunYet2 = true
-            didNotRunYet3 = true
-        }
-        
-    }
-    
-    func delay(delay:Double, closure:()->()) {
-        dispatch_after(
-            dispatch_time(
-                DISPATCH_TIME_NOW,
-                Int64(delay * Double(NSEC_PER_SEC))
-            ),
-            dispatch_get_main_queue(), closure)
     }
 }

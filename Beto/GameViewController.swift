@@ -13,7 +13,7 @@ import SpriteKit
 
 class GameViewController: UIViewController {
     
-    var gameScene: GameScene! // SCNScene
+    var gameScene: GameScene!
     var boardScene: BoardScene!
 
     var panGesture = UIPanGestureRecognizer.self()
@@ -27,13 +27,11 @@ class GameViewController: UIViewController {
     }
     
     override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        
         return UIInterfaceOrientationMask.AllButUpsideDown
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Release any cached data, images, etc that aren't in use.
     }
     
     override func prefersStatusBarHidden() -> Bool {
@@ -45,6 +43,8 @@ class GameViewController: UIViewController {
  
         // Configure the scene
         gameScene = GameScene()
+        gameScene.cubeRestHandler = handleCubeRest
+        gameScene.endGameplayHandler = handleEndGameplay
 
         // Configure the view
         let sceneView = self.view as! SCNView
@@ -72,11 +72,14 @@ class GameViewController: UIViewController {
         tapRecognizer.numberOfTapsRequired = 1
         tapRecognizer.numberOfTouchesRequired = 1
         
-        gameScene.cubeRestHandler = cubeRestHandler
+        // Subtract wagers from GameData
+        GameData.coins -= boardScene.board.getWagers()
+        
+        // DELETE 
+        print(GameData.coins)
     }
     
     func handlePan(gesture:UIPanGestureRecognizer) {
-        
         let translationY = gesture.translationInView(self.view).y
         let translationX = gesture.translationInView(self.view).x
         
@@ -90,60 +93,49 @@ class GameViewController: UIViewController {
                 touchCount += 1
             }
         } else if touchCount == 2 {
-            gameScene.winningSquares = []
             gameScene.shouldCheckMovement = true
-            
         }
     }
 
-    func cubeRestHandler() {
-        var row = Int()
-        var column = Int()
+    func handleCubeRest(winningColor: Color) {
         
-        if gameScene.winningSquares.last == "Yellow" {
-            row = 1
-            column = 0
-        } else if gameScene.winningSquares.last == "Cyan" {
-            row = 1
-            column = 1
-        } else if gameScene.winningSquares.last == "Purple" {
-            row = 1
-            column = 2
-        } else if gameScene.winningSquares.last == "Blue" {
-            row = 0
-            column = 0
-        } else if gameScene.winningSquares.last == "Red" {
-            row = 0
-            column = 1
-        } else if gameScene.winningSquares.last == "Green" {
-            row = 0
-            column = 2
-        }
+        // DELETE
+        print("handling \(winningColor.name)")
+        
+        boardScene.board.payout(winningColor)
+        
+        // DELETE 
+        print("finished payout")
+    }
     
-        boardScene.board.getWiningSquares(row, column: column)
-        boardScene.board.handleResults()
+    func handleEndGameplay() {
+        //DELETE
+        print("about to resolve")
         
-        if gameScene.winningSquares.count == 3 {
-            touchCount = 0
-            self.view.gestureRecognizers = []
-                
-            let triggerTime = (Int64(NSEC_PER_SEC) * 1) //Note: Delay needed for cubes to be removed first
-
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, triggerTime), dispatch_get_main_queue(),
-                { () -> Void in
-                    self.view.window?.rootViewController?.dismissViewControllerAnimated(true, completion: nil)
-                })
-            
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, triggerTime * 2), dispatch_get_main_queue(),
-                { () -> Void in
-                    self.gameScene.geometryNodes.addCubesTo(self.gameScene.geometryNodes.cubesNode)
-                    self.gameScene.resetCubes()
-                })
-            
-        }
+        boardScene.board.resolveWagers()
+        
+        touchCount = 0
+        self.view.gestureRecognizers = []
+        
+        let triggerTime = (Int64(NSEC_PER_SEC) * 1) //Note: Delay needed for cubes to be removed first
+        
+        print("resolved complete")
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, triggerTime), dispatch_get_main_queue(),
+                       { () -> Void in
+                        self.view.window?.rootViewController?.dismissViewControllerAnimated(true, completion: nil)
+        })
+        
+        
+        print("dismissed controller")
+        
+        //            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, triggerTime * 2), dispatch_get_main_queue(),
+        //                { () -> Void in
+        //                    self.gameScene.geometryNodes.addCubesTo(self.gameScene.geometryNodes.cubesNode)
+        //                    self.gameScene.resetCubes()
+        //                })
         
         //NOTE: Use to crash from dismissing the viewController too early, but now crashes after 5 throws ("Message from debugger: Terminated due to memory issue")
-
     }
     
     func handleTap(gesture:UITapGestureRecognizer) {

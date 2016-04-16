@@ -48,6 +48,16 @@ class MenuViewController: UIViewController {
         
         // Present the scene.
         skView.presentScene(scene)
+        
+        // DELETE
+        print("menu")
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        // DELETE
+        print("got back safely")
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

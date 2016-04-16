@@ -11,14 +11,14 @@ import SpriteKit
 enum Color: Int {
     case Blue, Red, Green, Yellow, Cyan, Purple
 
-    var color: String {
+    var name: String {
         let colors = ["Blue", "Red", "Green", "Yellow", "Cyan", "Purple"]
 
         return colors[rawValue]
     }
 
     var squareSpriteName: String {
-        return color + "Square"
+        return name + "Square"
     }
 
 }
