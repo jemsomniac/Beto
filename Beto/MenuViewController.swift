@@ -8,10 +8,16 @@
 
 import UIKit
 import SpriteKit
+import iAd
+import GoogleMobileAds
 
-class MenuViewController: UIViewController {
+class MenuViewController: UIViewController, ADBannerViewDelegate {
     var scene: MenuScene!
     var board: Board!
+    
+    @IBOutlet var adBannerView: ADBannerView?
+    @IBOutlet var gAdBannerView: GADBannerView!
+    
     
     @IBAction func unwindFromGameViewController(segue: UIStoryboardSegue) {
     
@@ -38,6 +44,7 @@ class MenuViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         // Configure the view.
         let skView = view as! SKView
         skView.multipleTouchEnabled = false
@@ -49,6 +56,10 @@ class MenuViewController: UIViewController {
         // Present the scene.
         skView.presentScene(scene)
         
+        self.canDisplayBannerAds = true
+        adBannerView?.delegate = self
+        self.gAdBannerView.hidden = true
+        
         // DELETE
         print("menu")
     }
@@ -58,6 +69,7 @@ class MenuViewController: UIViewController {
         
         // DELETE
         print("got back safely")
+        
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -68,5 +80,23 @@ class MenuViewController: UIViewController {
             }
         }
     }
+    
 
+    func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
+        //Switches to AdMob when iAd fails:
+        
+        //GAD Info: Ad unit name: BottomBanner
+        //GAD Info: Ad unit ID: ca-app-pub-2442145650959654/8984886127
+        
+        
+        adBannerView?.hidden = true
+        gAdBannerView.hidden = false
+        gAdBannerView.adUnitID = "ca-app-pub-2442145650959654/8984886127"
+        gAdBannerView.rootViewController = self
+        gAdBannerView.loadRequest(GADRequest())
+        
+        
+    }
+    
+    
 }

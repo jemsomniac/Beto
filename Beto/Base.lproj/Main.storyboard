@@ -5,7 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <scenes>
-        <!--Menu View Controller-->
+        <!--Delegate-->
         <scene sceneID="tXr-a1-R10">
             <objects>
                 <viewController id="BV1-FR-VrT" customClass="MenuViewController" customModule="Beto" customModuleProvider="target" sceneMemberID="viewController">
@@ -16,12 +16,37 @@
                     <view key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" id="3se-qz-xqx" customClass="SKView">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <adBannerView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HNX-Tg-tRi">
+                                <rect key="frame" x="0.0" y="601" width="375" height="66"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BV1-FR-VrT" id="g0w-QY-UzW"/>
+                                </connections>
+                            </adBannerView>
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8P7-Id-ICF" userLabel="GADView" customClass="GADBannerView">
+                                <rect key="frame" x="0.0" y="601" width="375" height="66"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BV1-FR-VrT" id="TF4-9u-0aF"/>
+                                </connections>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="qHh-Mt-9TT" firstAttribute="top" secondItem="8P7-Id-ICF" secondAttribute="bottom" id="LM1-ar-rd5"/>
+                            <constraint firstAttribute="trailing" secondItem="HNX-Tg-tRi" secondAttribute="trailing" id="Xzj-lt-xJg"/>
+                            <constraint firstItem="HNX-Tg-tRi" firstAttribute="leading" secondItem="3se-qz-xqx" secondAttribute="leading" id="boJ-uc-rdk"/>
+                            <constraint firstItem="8P7-Id-ICF" firstAttribute="leading" secondItem="3se-qz-xqx" secondAttribute="leading" id="jhk-Xk-IoG"/>
+                            <constraint firstItem="qHh-Mt-9TT" firstAttribute="top" secondItem="HNX-Tg-tRi" secondAttribute="bottom" id="mlu-7l-8VU"/>
+                            <constraint firstAttribute="trailing" secondItem="8P7-Id-ICF" secondAttribute="trailing" id="vo3-Ba-sdT"/>
+                        </constraints>
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
-                        <segue destination="CQp-Uo-aMs" kind="presentation" identifier="showGameScene" modalTransitionStyle="crossDissolve" id="MfV-JP-yZo"/>
+                        <outlet property="adBannerView" destination="HNX-Tg-tRi" id="xyN-A7-kaR"/>
+                        <outlet property="gAdBannerView" destination="8P7-Id-ICF" id="e25-4t-0Q8"/>
+                        <segue destination="CQp-Uo-aMs" kind="modal" identifier="showGameScene" modalTransitionStyle="crossDissolve" id="MfV-JP-yZo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
@@ -39,7 +64,30 @@
                     <view key="view" contentMode="scaleToFill" id="Qg6-22-3Lp" customClass="SCNView">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <adBannerView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="umA-rd-1Wp">
+                                <rect key="frame" x="0.0" y="601" width="375" height="66"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BV1-FR-VrT" id="Xey-ah-93E"/>
+                                </connections>
+                            </adBannerView>
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B02-UZ-XQz" userLabel="GADView" customClass="GADBannerView">
+                                <rect key="frame" x="0.0" y="601" width="375" height="66"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BV1-FR-VrT" id="xtf-oy-YrZ"/>
+                                </connections>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="B02-UZ-XQz" secondAttribute="trailing" id="MON-YG-mOH"/>
+                            <constraint firstItem="iAy-Yn-jig" firstAttribute="top" secondItem="B02-UZ-XQz" secondAttribute="bottom" id="V1P-vo-9RS"/>
+                            <constraint firstAttribute="trailing" secondItem="umA-rd-1Wp" secondAttribute="trailing" id="XyH-vi-Qdy"/>
+                            <constraint firstItem="iAy-Yn-jig" firstAttribute="top" secondItem="umA-rd-1Wp" secondAttribute="bottom" id="dDC-LU-eAM"/>
+                            <constraint firstItem="umA-rd-1Wp" firstAttribute="leading" secondItem="Qg6-22-3Lp" secondAttribute="leading" id="hvV-2a-mCg"/>
+                            <constraint firstItem="B02-UZ-XQz" firstAttribute="leading" secondItem="Qg6-22-3Lp" secondAttribute="leading" id="nuz-UB-Puz"/>
+                        </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
