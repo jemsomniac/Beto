@@ -8,23 +8,10 @@
 
 import SpriteKit
 
-enum PowerUpKey: String {
-    case doubleDice
-    case doublePayout
-    case triplePayout
-    case lifeline
-    case rewind
-    
-    static let allValues = [doubleDice, doublePayout, triplePayout, lifeline, rewind]
-}
-
 class PowerUp: ButtonNode {
     private var count: Int
     
     var activatePowerUpHandler: ((PowerUp) -> ())?
-    
-    private let label: SKLabelNode
-    private let labelShadow: SKLabelNode
     
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -33,12 +20,12 @@ class PowerUp: ButtonNode {
     init(name: String, count: Int) {
         self.count = count
         
-        label = SKLabelNode(text: "\(count)")
+        let label = SKLabelNode(text: "\(count)")
         label.fontName = Constant.FontNameExtraBold
-        label.fontSize = 24
+        label.fontSize = 18
         label.position = CGPoint(x: 10, y: -20)
         
-        labelShadow = label.createLabelShadow()
+        let labelShadow = label.createLabelShadow()
         
         super.init(defaultButtonImage: name, activeButtonImage: name)
 
@@ -54,9 +41,7 @@ class PowerUp: ButtonNode {
     }
     
     func buttonPressed() {
-        // DELETE: Currently not subtracting count. Do we need to?
         if count > 0 {
-            count -= 1
             activatePowerUpHandler!(self)            
         }
     }

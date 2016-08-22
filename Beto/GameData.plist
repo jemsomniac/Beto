@@ -2,6 +2,21 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>rewardsDice</key>
+	<dict>
+		<key>Bronze</key>
+		<integer>0</integer>
+		<key>Silver</key>
+		<integer>0</integer>
+		<key>Gold</key>
+		<integer>0</integer>
+		<key>Platinum</key>
+		<integer>0</integer>
+		<key>Diamond</key>
+		<integer>0</integer>
+		<key>Ruby</key>
+		<integer>0</integer>
+	</dict>
 	<key>powerUps</key>
 	<dict>
 		<key>doubleDice</key>

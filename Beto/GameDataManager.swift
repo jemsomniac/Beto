@@ -19,10 +19,8 @@ class GameDataManager {
     private let musicMutedKey = "musicMuted"
     private let currentThemeNameKey = "currentThemeName"
     private let unlockedThemesKey = "unlockedThemes"
-    
     private let powerUpsKey = "powerUps"
-    private let doubleDiceKey = "doubleDice"
-    private let doublePayoutKey = "doublePayout"
+    private let rewardsDiceKey = "rewardsDice"
     
     private let gamesPlayedKey = "gamesPlayed"
     private let redWinCountKey = "redWinCount"
@@ -43,8 +41,8 @@ class GameDataManager {
     private(set) var musicMuted: Bool
     private(set) var currentThemeName: String
     private(set) var unlockedThemes: [String]
-
     private(set) var powerUps: [String:Int]
+    private(set) var rewardsDice: [String: Int]
     
     private(set) var gamesPlayed: Int
     private(set) var redWinCount: Int
@@ -93,8 +91,8 @@ class GameDataManager {
         musicMuted = dict.objectForKey(musicMutedKey) as! Bool
         currentThemeName = dict.objectForKey(currentThemeNameKey) as! String
         unlockedThemes = dict.objectForKey(unlockedThemesKey) as! [String]
-
         powerUps = dict.objectForKey(powerUpsKey) as! [String:Int]
+        rewardsDice = dict.objectForKey(rewardsDiceKey) as! [String:Int]
         
         gamesPlayed = dict.objectForKey(gamesPlayedKey) as! Int
         redWinCount = dict.objectForKey(redWinCountKey) as! Int
@@ -125,8 +123,8 @@ class GameDataManager {
         dict.setObject(musicMuted, forKey: musicMutedKey)
         dict.setObject(currentThemeName, forKey: currentThemeNameKey)
         dict.setObject(unlockedThemes, forKey: unlockedThemesKey)
-        
         dict.setObject(powerUps, forKey: powerUpsKey)
+        dict.setObject(rewardsDice, forKey: rewardsDiceKey)
         
         dict.setObject(gamesPlayed, forKey: gamesPlayedKey)
         dict.setObject(redWinCount, forKey: redWinCountKey)
@@ -265,6 +263,26 @@ class GameDataManager {
     func subtractPowerUpCount(powerUpKey: String, num: Int) {
         if let value = powerUps[powerUpKey] {
             powerUps[powerUpKey] = value - num
+        }
+    }
+    
+    func getRewardsDiceCount(diceKey: String) -> Int {
+        if let value = rewardsDice[diceKey] {
+            return value
+        } else {
+            return -1
+        }
+    }
+    
+    func addRewardsDiceCount(diceKey: String, num: Int) {
+        if let value = rewardsDice[diceKey] {
+            rewardsDice[diceKey] = value + num
+        }
+    }
+    
+    func subtractRewardsDiceCount(diceKey: String, num: Int) {
+        if let value = rewardsDice[diceKey] {
+            rewardsDice[diceKey] = value - num
         }
     }
 }

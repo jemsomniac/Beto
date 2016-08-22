@@ -441,7 +441,7 @@ class BoardScene: SKScene {
     
     /***** Misc. Button Functions *****/
     private func powerUpButtonPressed() {
-        let powerUpVault = PowerUpVault()
+        let powerUpVault = PowerUpVault(activePowerUp: activePowerUp)
         powerUpVault.activatePowerUpHandler = activatePowerUp
         
         addChild(powerUpVault.createLayer())
@@ -481,10 +481,22 @@ class BoardScene: SKScene {
     }
     
     private func diceVaultButtonPressed() {
-        // DELETE: Unit Test Button
-        for key in PowerUpKey.allValues {
-            GameData.addPowerUpCount(key.rawValue, num: 1)
-        }
+        let rewardsDiceVault = RewardsDiceVault()
+        rewardsDiceVault.openRewardsDiceHandler = openRewardsDice
+        
+        addChild(rewardsDiceVault.createLayer())
+    }
+    
+    private func openRewardsDice(dice: RewardsDice) {
+        let openRewards = OpenRewardsNode(diceKey: dice.key)
+        addChild(openRewards.createLayer())
+        
+        openRewards.claimRewardsHandler = handleClaimRewards
+    }
+    
+    private func handleClaimRewards() {
+        // DELETE: Possibly need this if we have to add coins as a reward, otherwise not needed
+        print("handled!")
     }
     
     /***** Gameplay Functions *****/
@@ -706,57 +718,114 @@ class BoardScene: SKScene {
             container.size = CGSize(width: 304, height: 225)
             container.position = CGPoint(x: 0, y: ScreenSize.Height)
             
-            let rewardsLabel = SKLabelNode(text: "BONUS REWARD")
+//            var rewardType = ""
+////            var amount = 0
+//            
+//            let rand = Int(arc4random_uniform(100)) + 1
+//
+//            // Percentage for each type: 
+//            // Bronze - 70, Silver - 15, Gold - 9, Platinum - 3, Diamond - 2, Ruby - 1
+//            if rand <= 70 {
+//                rewardType = "Bronze"
+//            } else if rand <= 85 {
+//                rewardType = "Silver"
+//            } else if rand <= 94 {
+//                rewardType = "Gold"
+//            } else if rand <= 97{
+//                rewardType = "Platinum"
+//            } else if rand <= 99 {
+//                rewardType = "Diamond"
+//            } else {
+//                rewardType = "Ruby"
+//            }
+            
+//            rand = Int(arc4random_uniform(100)) + 1
+//
+//            // DELETE: Temp - Resolve reward amount
+//            if rand <= 40 {
+//                amount = 1
+//            } else if rand <= 70 {
+//                amount = 2
+//            } else if rand <= 85 {
+//                amount = 3
+//            } else if rand <= 95 {
+//                amount = 4
+//            } else {
+//                amount = 5
+//            }
+            
+//            let sprite = SKSpriteNode(imageNamed: "\(rewardType.lowercaseString)Reward")
+            
+            let rewardsDice: RewardsDice
+            
+            let rand = Int(arc4random_uniform(100)) + 1
+            
+            // Percentage for each type:
+            // Bronze - 70, Silver - 15, Gold - 9, Platinum - 3, Diamond - 2, Ruby - 1
+            if rand <= 70 {
+                rewardsDice = RewardsDice(key: .Bronze, count: -99)
+            } else if rand <= 85 {
+                rewardsDice = RewardsDice(key: .Silver, count: -99)
+            } else if rand <= 94 {
+                rewardsDice = RewardsDice(key: .Gold, count: -99)
+            } else if rand <= 97{
+                rewardsDice = RewardsDice(key: .Platinum, count: -99)
+            } else if rand <= 99 {
+                rewardsDice = RewardsDice(key: .Diamond, count: -99)
+            } else {
+                rewardsDice = RewardsDice(key: .Ruby, count: -99)
+            }
+
+            print(GameData.getRewardsDiceCount(rewardsDice.key.rawValue))
+            GameData.addRewardsDiceCount(rewardsDice.key.rawValue, num: 1)
+            print(GameData.getRewardsDiceCount(rewardsDice.key.rawValue))
+            GameData.save()
+            
+//            let rewardsDice: ButtonNode
+//            
+//            let rand = Int(arc4random_uniform(100)) + 1
+//            
+//            if rand <= 70 {
+//                rewardsDice = ButtonNode(defaultButtonImage: "\(RewardsDiceKey.Bronze.rawValue.lowercaseString)Reward")
+//            } else if rand <= 85 {
+//                rewardsDice = ButtonNode(defaultButtonImage: "\(RewardsDiceKey.Bronze.rawValue.lowercaseString)Reward")
+//            } else if rand <= 94 {
+//                rewardsDice = ButtonNode(defaultButtonImage: "\(RewardsDiceKey.Bronze.rawValue.lowercaseString)Reward")
+//            } else if rand <= 97{
+//                rewardsDice = ButtonNode(defaultButtonImage: "\(RewardsDiceKey.Bronze.rawValue.lowercaseString)Reward")
+//            } else if rand <= 99 {
+//                rewardsDice = ButtonNode(defaultButtonImage: "\(RewardsDiceKey.Bronze.rawValue.lowercaseString)Reward")
+//            } else {
+//                rewardsDice = ButtonNode(defaultButtonImage: "\(RewardsDiceKey.Bronze.rawValue.lowercaseString)Reward")
+//            }
+//            
+//            rewardsDice.action = {
+//                openRewardsDice(rewardsDice)
+//            }
+            
+            // DELETE: Change font color?
+            let rewardsLabel = SKLabelNode(text: "\(rewardsDice.key.rawValue.uppercaseString) REWARDS DICE")
             rewardsLabel.fontName = Constant.FontNameExtraBold
-            rewardsLabel.fontColor = Constant.BetoGreen
+//            rewardsLabel.fontColor = Constant.BetoGreen
             rewardsLabel.fontSize = 14
-            rewardsLabel.position = CGPoint(x: 0, y: 30)
+            rewardsLabel.position = CGPoint(x: 0, y: 50)
             
             let rewardsLabelShadow = rewardsLabel.createLabelShadow()
             
-            var rewardType = ""
-            var amount = 0
-            
-            var rand = Int(arc4random_uniform(100)) + 1
-            
-            // DELETE: Temp - Resolve reward type
-            if rand <= 20 {
-                rewardType = "doubleDice"
-            } else if rand <= 40 {
-                rewardType = "doublePayout"
-            } else if rand <= 60 {
-                rewardType = "triplePayout"
-            } else if rand <= 79{
-                rewardType = "lifeline"
-            } else if rand <= 98 {
-                rewardType = "rewind"
-            } else {
-                rewardType = "starCoin"
-            }
-                        
-            rand = Int(arc4random_uniform(100)) + 1
-
-            // DELETE: Temp - Resolve reward amount
-            if rand <= 40 {
-                amount = 1
-            } else if rand <= 70 {
-                amount = 2
-            } else if rand <= 85 {
-                amount = 3
-            } else if rand <= 95 {
-                amount = 4
-            } else {
-                amount = 5
-            }
-            
-            let sprite = SKSpriteNode(imageNamed: rewardType)
+            let detailsLabel = SKLabelNode(text: "Click dice to open or claim to store")
+            detailsLabel.fontName = Constant.FontName
+            detailsLabel.fontColor = UIColor.darkGrayColor()
+            detailsLabel.fontSize = 10
+            detailsLabel.position = CGPoint(x: 0, y: 35)
             
             // DELETE: Temp text
-            let label = SKLabelNode(text: "x\(amount)")
-            label.fontName = Constant.FontName
-            label.fontColor = UIColor.darkGrayColor()
-            label.fontSize = 14
-            label.position = CGPoint(x: 40, y: -5)
+//            let label = SKLabelNode(text: "x1")
+//            label.fontName = Constant.FontName
+//            label.fontColor = UIColor.darkGrayColor()
+//            label.fontSize = 14
+//            label.position = CGPoint(x: 30, y: -5)
+            
+            // DELETE: Hold to open feature?
             
             // Claim button
             let claimButton = ButtonNode(defaultButtonImage: "claimButton", activeButtonImage: "claimButton_active")
@@ -764,24 +833,23 @@ class BoardScene: SKScene {
             claimButton.position = CGPoint(x: 0, y: -80)
             
             // Add nodes
-            sprite.addChild(label)
+//            sprite.addChild(label)
             
             container.addChild(rewardsLabelShadow)
             container.addChild(rewardsLabel)
-            container.addChild(sprite)
+            container.addChild(detailsLabel) // DELETE: Temp
+            container.addChild(rewardsDice)
             container.addChild(claimButton)
             
             let randomReward = DropdownNode(container: container)
             
-            claimButton.action = {                
-                if rewardType == "starCoin" {
-                    GameData.addStarCoins(amount)
-                } else {
-                    GameData.addPowerUpCount(rewardType, num: amount)
-                }
-                
-                GameData.save()
-                
+            rewardsDice.openRewardsDiceHandler = openRewardsDice
+            rewardsDice.action = {
+                rewardsDice.buttonPressed()
+                randomReward.close()
+            }
+
+            claimButton.action = {
                 randomReward.close()
             }
             
@@ -796,26 +864,15 @@ class BoardScene: SKScene {
             container.size = CGSize(width: 304, height: 267)
             container.position = CGPoint(x: 0, y: ScreenSize.Height)
             
-            var text = ""
             
             let rand = Int(arc4random_uniform(5))
+            let flavorText = ["WHO DOESN'T LOVE FREE STUFF",
+                              "HEY, LOOK WHAT I FOUND",
+                              "AWWW, STOP CRYING. HERE TAKE THIS",
+                              "OUCH! CONSOLATION PRIZE?",
+                              "YOU INHERIT 100 BETO COINS!"]
             
-            switch rand {
-            case 0:
-                text = "WHO DOESN'T LOVE FREE STUFF"
-            case 1:
-                text = "I THINK YOU DROPPED THIS"
-            case 2:
-                text = "AWWW, STOP CRYING. HERE TAKE THIS"
-            case 3:
-                text = "OUCH! CONSOLATION PRIZE?"
-            case 4:
-                text = "YOU INHERIT 100 BETO COINS"
-            default:
-                text = "WHO DOESN'T LOVE FREE STUFF"
-            }
-            
-            let titleLabel = SKLabelNode(text: text)
+            let titleLabel = SKLabelNode(text: flavorText[rand])
             titleLabel.fontName = Constant.FontNameExtraBold
             titleLabel.fontColor = UIColor.whiteColor()
             titleLabel.fontSize = 14

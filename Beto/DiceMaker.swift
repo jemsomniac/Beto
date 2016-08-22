@@ -14,7 +14,7 @@ enum DiceType {
 //    case SilverReward
 //    case GoldReward
 //    case PlatinumReward
-    case Rewards
+//    case DiamondReward
     case DoublePayout
     case TriplePayout
     case DoubleDice
@@ -43,15 +43,15 @@ class DiceMaker {
         switch type {
         case .Default:
             break
-        case .Rewards:
-            break
 //        case .BasicReward:
-//           break
+//            break
 //        case .SilverReward:
 //            break
 //        case .GoldReward:
 //            break
 //        case .PlatinumReward:
+//            break
+//        case .DiamondReward:
 //            break
         case .DoubleDice:
             count = 6
@@ -123,12 +123,12 @@ class DiceMaker {
         }
     }
     
-    func faceMaker(backgroundImage: UIImage, rewardImage: UIImage, rewardPoint: CGPoint) -> UIImage {
-        UIGraphicsBeginImageContext(CGSize(width: 80, height: 80))
-        
-        backgroundImage.drawAtPoint(CGPoint(x: 0, y: 0))
-        rewardImage.drawAtPoint(rewardPoint)
-        
-        return UIGraphicsGetImageFromCurrentImageContext()
-    }
+//    func faceMaker(backgroundImage: UIImage, rewardImage: UIImage, rewardPoint: CGPoint) -> UIImage {
+//        UIGraphicsBeginImageContext(CGSize(width: 80, height: 80))
+//        
+//        backgroundImage.drawAtPoint(CGPoint(x: 0, y: 0))
+//        rewardImage.drawAtPoint(rewardPoint)
+//        
+//        return UIGraphicsGetImageFromCurrentImageContext()
+//    }
 }

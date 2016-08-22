@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		00543AFB1C92ACCC006C3B52 /* DiceMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00543AFA1C92ACCC006C3B52 /* DiceMaker.swift */; };
+		B92354C31D683BC1006F653E /* RewardsDiceVault.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92354C21D683BC1006F653E /* RewardsDiceVault.swift */; };
+		B92354C51D6841AA006F653E /* RewardsDice.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92354C41D6841AA006F653E /* RewardsDice.swift */; };
+		B92354C91D685331006F653E /* OpenRewardsNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92354C81D685331006F653E /* OpenRewardsNode.swift */; };
 		B93465A21C7D2B32008CDA26 /* GameDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93465A11C7D2B32008CDA26 /* GameDataManager.swift */; };
 		B947ABA01C9124FF00720E2F /* Reward.swift in Sources */ = {isa = PBXBuildFile; fileRef = B947AB9F1C9124FF00720E2F /* Reward.swift */; };
 		B94F774B1C63FB7F00B3A78C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94F774A1C63FB7F00B3A78C /* AppDelegate.swift */; };
@@ -69,6 +72,9 @@
 
 /* Begin PBXFileReference section */
 		00543AFA1C92ACCC006C3B52 /* DiceMaker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiceMaker.swift; sourceTree = "<group>"; };
+		B92354C21D683BC1006F653E /* RewardsDiceVault.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RewardsDiceVault.swift; sourceTree = "<group>"; };
+		B92354C41D6841AA006F653E /* RewardsDice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RewardsDice.swift; sourceTree = "<group>"; };
+		B92354C81D685331006F653E /* OpenRewardsNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenRewardsNode.swift; sourceTree = "<group>"; };
 		B93465A11C7D2B32008CDA26 /* GameDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameDataManager.swift; sourceTree = "<group>"; };
 		B947AB9F1C9124FF00720E2F /* Reward.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reward.swift; sourceTree = "<group>"; };
 		B94F77471C63FB7F00B3A78C /* Beto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Beto.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -143,17 +149,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		B912C4771CDD8D5700049595 /* BoardNodes */ = {
+		B92354C11D683B86006F653E /* ButtonNodes */ = {
 			isa = PBXGroup;
 			children = (
 				B9F1D2791C75AE6700E242F7 /* ButtonNode.swift */,
 				B94F77801C641CA600B3A78C /* Square.swift */,
 				B950AF9B1C8A50EE00A74054 /* Coin.swift */,
-				B9C7E2C31C8B88A300879014 /* CoinVault.swift */,
 				B96F93791D5DAB2E00617A0B /* PowerUp.swift */,
-				B96F93771D5D829000617A0B /* PowerUpVault.swift */,
+				B92354C41D6841AA006F653E /* RewardsDice.swift */,
 			);
-			name = BoardNodes;
+			name = ButtonNodes;
 			sourceTree = "<group>";
 		};
 		B94F773E1C63FB7F00B3A78C = {
@@ -215,7 +220,7 @@
 		B94F77881C642CF100B3A78C /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				B912C4771CDD8D5700049595 /* BoardNodes */,
+				B92354C11D683B86006F653E /* ButtonNodes */,
 				B9C9A18D1D57317F00D68C62 /* DropdownNodes */,
 				B9CDB80E1CB8593C00BC8A57 /* Settings.swift */,
 				B969C0FB1C7E8B2A00B24CDB /* Constant.swift */,
@@ -269,6 +274,10 @@
 			isa = PBXGroup;
 			children = (
 				B972CFFA1D124A9F0030119D /* DropdownNode.swift */,
+				B9C7E2C31C8B88A300879014 /* CoinVault.swift */,
+				B96F93771D5D829000617A0B /* PowerUpVault.swift */,
+				B92354C21D683BC1006F653E /* RewardsDiceVault.swift */,
+				B92354C81D685331006F653E /* OpenRewardsNode.swift */,
 				B9C067281CF009170021AE6E /* AchievementNode.swift */,
 				B9C0672A1CF0094F0021AE6E /* AchievementsListNode.swift */,
 				B95511D91CF8301E005DB77E /* UnlockedLevel.swift */,
@@ -416,6 +425,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				B983ED271D02283B00A9507F /* Theme.swift in Sources */,
+				B92354C91D685331006F653E /* OpenRewardsNode.swift in Sources */,
+				B92354C31D683BC1006F653E /* RewardsDiceVault.swift in Sources */,
 				B947ABA01C9124FF00720E2F /* Reward.swift in Sources */,
 				B96F93781D5D829000617A0B /* PowerUpVault.swift in Sources */,
 				B94F77811C641CA600B3A78C /* Square.swift in Sources */,
@@ -441,6 +452,7 @@
 				00543AFB1C92ACCC006C3B52 /* DiceMaker.swift in Sources */,
 				B9F1D27A1C75AE6700E242F7 /* ButtonNode.swift in Sources */,
 				B9C7E2C41C8B88A300879014 /* CoinVault.swift in Sources */,
+				B92354C51D6841AA006F653E /* RewardsDice.swift in Sources */,
 				B9CDB80F1CB8593C00BC8A57 /* Settings.swift in Sources */,
 				B983ED291D022A7F00A9507F /* ThemeManager.swift in Sources */,
 			);
