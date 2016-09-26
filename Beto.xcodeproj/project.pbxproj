@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		00543AFB1C92ACCC006C3B52 /* DiceMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00543AFA1C92ACCC006C3B52 /* DiceMaker.swift */; };
+		3CC9988E1D997DCD0024C283 /* IAPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CC9988D1D997DCD0024C283 /* IAPHelper.swift */; };
+		3CC998901D997F8D0024C283 /* Products.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CC9988F1D997F8D0024C283 /* Products.swift */; };
 		B92354C31D683BC1006F653E /* RewardsDiceVault.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92354C21D683BC1006F653E /* RewardsDiceVault.swift */; };
 		B92354C51D6841AA006F653E /* RewardsDice.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92354C41D6841AA006F653E /* RewardsDice.swift */; };
 		B92354C91D685331006F653E /* OpenRewardsNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92354C81D685331006F653E /* OpenRewardsNode.swift */; };
@@ -72,6 +74,8 @@
 
 /* Begin PBXFileReference section */
 		00543AFA1C92ACCC006C3B52 /* DiceMaker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiceMaker.swift; sourceTree = "<group>"; };
+		3CC9988D1D997DCD0024C283 /* IAPHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IAPHelper.swift; sourceTree = "<group>"; };
+		3CC9988F1D997F8D0024C283 /* Products.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Products.swift; sourceTree = "<group>"; };
 		B92354C21D683BC1006F653E /* RewardsDiceVault.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RewardsDiceVault.swift; sourceTree = "<group>"; };
 		B92354C41D6841AA006F653E /* RewardsDice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RewardsDice.swift; sourceTree = "<group>"; };
 		B92354C81D685331006F653E /* OpenRewardsNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenRewardsNode.swift; sourceTree = "<group>"; };
@@ -232,6 +236,8 @@
 				B973BA0F1CBE3A0700FF90F9 /* AudioManager.swift */,
 				B93465A11C7D2B32008CDA26 /* GameDataManager.swift */,
 				B972CFFC1D1254E30030119D /* Extensions.swift */,
+				3CC9988D1D997DCD0024C283 /* IAPHelper.swift */,
+				3CC9988F1D997F8D0024C283 /* Products.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -431,6 +437,7 @@
 				B92354C91D685331006F653E /* OpenRewardsNode.swift in Sources */,
 				B92354C31D683BC1006F653E /* RewardsDiceVault.swift in Sources */,
 				B96F93781D5D829000617A0B /* PowerUpVault.swift in Sources */,
+				3CC9988E1D997DCD0024C283 /* IAPHelper.swift in Sources */,
 				B94F77811C641CA600B3A78C /* Square.swift in Sources */,
 				B95511DA1CF8301E005DB77E /* UnlockedLevel.swift in Sources */,
 				B973BA101CBE3A0700FF90F9 /* AudioManager.swift in Sources */,
@@ -438,6 +445,7 @@
 				B983ED2B1D0293D200A9507F /* ThemesScene.swift in Sources */,
 				B9F1D2701C7571BC00E242F7 /* MenuScene.swift in Sources */,
 				B969C0FC1C7E8B2A00B24CDB /* Constant.swift in Sources */,
+				3CC998901D997F8D0024C283 /* Products.swift in Sources */,
 				B94F774F1C63FB7F00B3A78C /* GameScene.swift in Sources */,
 				B950AF9C1C8A50EE00A74054 /* Coin.swift in Sources */,
 				B988697B1CB99CFE0017577D /* BoardScene.swift in Sources */,
