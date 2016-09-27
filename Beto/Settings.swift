@@ -56,20 +56,27 @@ class Settings {
         closeButton.action = close
         soundButton.action = toggleSoundButton
         musicButton.action = toggleMusicButton
-        deactivateButton.action = toggleDeactivateButton
         
         // Designate positions
         closeButton.position = CGPoint(x: 60, y: -100)
         soundButton.position = CGPoint(x: 0, y: -160)
         musicButton.position = CGPoint(x: 60, y: -160)
-        deactivateButton.position = CGPoint(x: 120, y: -160)
         
         // Add nodes to layer node
         layer.addChild(background)
         layer.addChild(closeButton)
         layer.addChild(soundButton)
         layer.addChild(musicButton)
-        layer.addChild(deactivateButton)
+        
+        // Check if remove ads is already purchased
+        if Products.store.isProductPurchased(Products.RemoveAds) {
+            deactivateButton.isHidden = true
+        } else {
+            deactivateButton.isHidden = false
+            deactivateButton.action = toggleDeactivateButton
+            deactivateButton.position = CGPoint(x: 120, y: -160)
+            layer.addChild(deactivateButton)
+        }
         
         return layer
     }
@@ -118,5 +125,13 @@ class Settings {
                 }
             }
         }
+    }
+    
+    func presentMenuScene() {
+        let transition = SKTransition.flipVertical(withDuration: 0.4)
+        let menuScene = MenuScene(size: CGSize(width: ScreenSize.Width, height: ScreenSize.Height))
+        menuScene.scaleMode = .aspectFill
+        let skView = SKView()
+        skView.presentScene(menuScene, transition: transition)
     }
 }

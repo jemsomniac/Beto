@@ -33,8 +33,13 @@ class MenuViewController: UIViewController, GADInterstitialDelegate {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        if GameData.gamesPlayed % 10 == 0 || GameData.coins == 0 {
-            showInterstitialAD()
+        if Products.store.isProductPurchased(Products.RemoveAds) {
+            print("REMOVE ADS")
+        } else {
+            print("ADS")
+            if GameData.gamesPlayed % 10 == 0 || GameData.coins == 0 {
+                showInterstitialAD()
+            }
         }
     }
     
@@ -52,14 +57,21 @@ class MenuViewController: UIViewController, GADInterstitialDelegate {
         // Present the scene.
         skView.presentScene(scene)
         
-        // DELETE: Use TEST Ads during dev and testing. Change to live only on launch
-        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
-        bannerView.rootViewController = self
-        let test = GADRequest()
-        test.testDevices = ["57738ac8abf9499b8b4df6e379d05c76"]
-        bannerView.load(test)
+        if Products.store.isProductPurchased(Products.RemoveAds) {
+            print("REMOVE ADS")
+        } else {
+            print("ADS")
+            // DELETE: Use TEST Ads during dev and testing. Change to live only on launch
+            bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+            bannerView.rootViewController = self
+            let test = GADRequest()
+            test.testDevices = ["57738ac8abf9499b8b4df6e379d05c76"]
+            bannerView.load(test)
+            
+            interstitialAd = reloadInterstitialAd()
+        }
         
-        interstitialAd = reloadInterstitialAd()
+        NotificationCenter.default.addObserver(self, selector: #selector(MenuViewController.removeAds), name: NSNotification.Name(rawValue: IAPHelper.IAPHelperPurchaseNotification), object: nil)
     }
     
     func reloadInterstitialAd() -> GADInterstitial {
@@ -81,6 +93,10 @@ class MenuViewController: UIViewController, GADInterstitialDelegate {
         if interstitialAd.isReady {
             self.interstitialAd.present(fromRootViewController: self)
         }
+    }
+    
+    func removeAds() {
+        bannerView.removeFromSuperview()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
