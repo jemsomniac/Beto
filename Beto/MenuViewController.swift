@@ -33,10 +33,7 @@ class MenuViewController: UIViewController, GADInterstitialDelegate {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        if Products.store.isProductPurchased(Products.RemoveAds) {
-            print("REMOVE ADS")
-        } else {
-            print("ADS")
+        if !Products.store.isProductPurchased(Products.RemoveAds) {
             if GameData.gamesPlayed % 10 == 0 || GameData.coins == 0 {
                 showInterstitialAD()
             }
@@ -57,10 +54,7 @@ class MenuViewController: UIViewController, GADInterstitialDelegate {
         // Present the scene.
         skView.presentScene(scene)
         
-        if Products.store.isProductPurchased(Products.RemoveAds) {
-            print("REMOVE ADS")
-        } else {
-            print("ADS")
+        if !Products.store.isProductPurchased(Products.RemoveAds) {
             // DELETE: Use TEST Ads during dev and testing. Change to live only on launch
             bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
             bannerView.rootViewController = self

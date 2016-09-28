@@ -14,7 +14,6 @@ class Settings {
     fileprivate let soundButton: ButtonNode
     fileprivate let musicButton: ButtonNode
     fileprivate let closeButton: ButtonNode
-    fileprivate let deactivateButton: ButtonNode
     
     init() {
         layer = SKNode()
@@ -42,9 +41,6 @@ class Settings {
         
         musicButton = ButtonNode(defaultButtonImage: musicImage)
         musicButton.size = CGSize(width: 44, height: 45)
-        
-        deactivateButton = ButtonNode(defaultButtonImage: "closeButton_Large")
-        deactivateButton.size = CGSize(width: 44, height: 45)
     }
     
     func createLayer() -> SKNode {
@@ -68,16 +64,6 @@ class Settings {
         layer.addChild(soundButton)
         layer.addChild(musicButton)
         
-        // Check if remove ads is already purchased
-        if Products.store.isProductPurchased(Products.RemoveAds) {
-            deactivateButton.isHidden = true
-        } else {
-            deactivateButton.isHidden = false
-            deactivateButton.action = toggleDeactivateButton
-            deactivateButton.position = CGPoint(x: 120, y: -160)
-            layer.addChild(deactivateButton)
-        }
-        
         return layer
     }
     
@@ -87,7 +73,6 @@ class Settings {
         soundButton.run(SKAction.removeFromParent())
         musicButton.run(SKAction.removeFromParent())
         closeButton.run(SKAction.removeFromParent())
-        deactivateButton.run(SKAction.removeFromParent())
         
         let fadeOut = SKAction.fadeAlpha(to: 0.0, duration: 0.3)
         let backgroundActions = SKAction.sequence([fadeOut, SKAction.removeFromParent()])
@@ -114,16 +99,6 @@ class Settings {
             musicButton.changeTexture("musicButton_mute")
         } else {
             musicButton.changeTexture("musicButton")
-        }
-    }
-    
-    func toggleDeactivateButton() {
-        Products.store.requestProducts { (success, products) in
-            if success {
-                for product in products! {
-                    Products.store.buyProduct(product)
-                }
-            }
         }
     }
     
