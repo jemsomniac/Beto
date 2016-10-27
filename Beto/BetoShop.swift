@@ -34,31 +34,15 @@ class BetoShop: DropdownNode {
         closeButton.name = "closeButton"
         
         container.addChild(closeButton)
-                
+        
+        // Configure shop type
         switch(type) {
         case .RewardsDice:
             displayBuyDiceNode()
         case .StarCoins:
             displayBuyStarCoinsNode()
         }
-            
-//        displayMenuNode()
     }
-    
-//    func displayMenuNode() {
-//        removeChildNodes()
-//
-//        let rewardsDiceButton = ButtonNode(defaultButtonImage: "purchaseRewardsDice")
-//        rewardsDiceButton.action = displayBuyDiceNode
-//        rewardsDiceButton.position = CGPoint(x: 0, y: 60)
-//        
-//        let starCoinsButton = ButtonNode(defaultButtonImage: "purchaseStarCoins")
-//        starCoinsButton.action = displayBuyStarCoinsNode
-//        starCoinsButton.position = CGPoint(x: 0, y: -60)
-//        
-//        container.addChild(rewardsDiceButton)
-//        container.addChild(starCoinsButton)
-//    }
     
     func displayBuyDiceNode() {
         removeChildNodes()
@@ -75,15 +59,10 @@ class BetoShop: DropdownNode {
         let buyRuby = BuyDiceNode(diceKey: .Ruby, price: 1000000)
         buyRuby.position = pointForIndex(3)
         
-//        let backButton = ButtonNode(defaultButtonImage: "backButton")
-//        backButton.action = displayMenuNode
-//        backButton.position = CGPoint(x: 0, y: -145)
-        
         container.addChild(buyGold)
         container.addChild(buyPlatinum)
         container.addChild(buyDiamond)
         container.addChild(buyRuby)
-//        container.addChild(backButton)
     }
     
     func displayBuyStarCoinsNode() {
@@ -101,10 +80,6 @@ class BetoShop: DropdownNode {
         let ultimate = BuyStarCoinsNode(count: 300, bonusDice: [.Ruby, .Ruby, .Ruby], price: "$17.99")
         ultimate.position = pointForIndex(3)
         
-//        let backButton = ButtonNode(defaultButtonImage: "backButton")
-//        backButton.action = displayMenuNode
-//        backButton.position = CGPoint(x: 0, y: -145)
-        
         let addFreeText = SKSpriteNode(imageNamed: "adFree")
         addFreeText.position = CGPoint(x: 0, y: -145)
         
@@ -112,7 +87,6 @@ class BetoShop: DropdownNode {
         container.addChild(plus)
         container.addChild(premium)
         container.addChild(ultimate)
-//        container.addChild(backButton)
         container.addChild(addFreeText)
     }
     
