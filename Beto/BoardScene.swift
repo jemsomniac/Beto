@@ -27,6 +27,7 @@ class BoardScene: SKScene {
     fileprivate let deactivatePowerUpSprite: SKSpriteNode
     fileprivate let coinVaultButton: ButtonNode
     fileprivate let diceVaultButton: ButtonNode
+    fileprivate let shopButton: ButtonNode
 
     // Squares
     fileprivate let squareSize: CGFloat = 92.0
@@ -134,6 +135,10 @@ class BoardScene: SKScene {
                                            y: gameHUD.position.y - (gameHUD.size.height + diceVaultButton.size.height + Constant.Margin) / 2)
         diceVaultButton.addWobbleAnimation()
         
+        shopButton = ButtonNode(defaultButtonImage: "shopButton")
+        shopButton.position = CGPoint(x: (board.size.width - shopButton.size.width) / 2,
+                                      y: gameHUD.position.y - (gameHUD.size.height + shopButton.size.height + Constant.Margin) / 2)
+        
         deactivatePowerUpSprite = SKSpriteNode(imageNamed: "deactivateButton")
         deactivatePowerUpSprite.size = CGSize(width: 18, height: 19)
         
@@ -146,7 +151,7 @@ class BoardScene: SKScene {
         
         // Set button actions
         menuButton.action = presentMenuScene
-        coinsButton.action = displayShop
+//        coinsButton.action = displayShop // DELETE: Test
         highscoreButton.action = displayAchievements
         
         playButton.action = playButtonPressed
@@ -154,6 +159,7 @@ class BoardScene: SKScene {
         powerUpButton.action = powerUpButtonPressed
         coinVaultButton.action = coinVaultButtonPressed
         diceVaultButton.action = diceVaultButtonPressed
+        shopButton.action = displayShop
         
         // Set text for labels
         updateCoinsLabel(GameData.coins)
@@ -185,6 +191,7 @@ class BoardScene: SKScene {
         layer.addChild(powerUpButton)
         layer.addChild(coinVaultButton)
         layer.addChild(diceVaultButton)
+        layer.addChild(shopButton)
         
         // Initialize background
         let background = SKSpriteNode(imageNamed: theme.background)
@@ -225,6 +232,7 @@ class BoardScene: SKScene {
         }
         
         diceVaultButton.isHidden = isHidden
+        shopButton.isHidden = !isHidden
     }
     
     /***** GameHUD Functions *****/
@@ -243,8 +251,8 @@ class BoardScene: SKScene {
         addChild(layer)
     }
     
-    fileprivate func displayShop() {
-        let shop = BetoShop()
+    fileprivate func displayShop() {        
+        let shop = BetoShop(type: .RewardsDice)
         addChild(shop.createLayer())
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateHUDAfterBuy), name: NSNotification.Name(rawValue: "updateHUDAfterBuy"), object: nil)
@@ -455,6 +463,9 @@ class BoardScene: SKScene {
         rewardsDiceVault.openRewardsDiceHandler = openRewardsDice
         
         addChild(rewardsDiceVault.createLayer())
+        
+        // DELETE: Test
+        NotificationCenter.default.addObserver(self, selector: #selector(updateHUDAfterBuy), name: NSNotification.Name(rawValue: "updateHUDAfterBuy"), object: nil)
     }
     
     fileprivate func openRewardsDice(_ dice: RewardsDice) {

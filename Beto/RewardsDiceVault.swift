@@ -41,9 +41,17 @@ class RewardsDiceVault: DropdownNode {
             vault.addChild(infoOverlay)
         }
  
+        let shopButton = ButtonNode(defaultButtonImage: "shopButton")
+        shopButton.position = CGPoint(x: -110, y: -75)
+        shopButton.action = {
+            let shop = BetoShop(type: .RewardsDice)
+            vault.addChild(shop.createLayer())
+        }
+        
         // Add nodes
         vault.addChild(closeButton)
         vault.addChild(infoButton)
+        vault.addChild(shopButton)
         
         var position = 0
         

@@ -14,6 +14,7 @@
 		B92354C31D683BC1006F653E /* RewardsDiceVault.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92354C21D683BC1006F653E /* RewardsDiceVault.swift */; };
 		B92354C51D6841AA006F653E /* RewardsDice.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92354C41D6841AA006F653E /* RewardsDice.swift */; };
 		B92354C91D685331006F653E /* OpenRewardsDice.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92354C81D685331006F653E /* OpenRewardsDice.swift */; };
+		B926070B1DC17FEE00FCB98C /* BuyStarCoinsNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B926070A1DC17FEE00FCB98C /* BuyStarCoinsNode.swift */; };
 		B92C4D151DA76300005CADB2 /* Whoosh.wav in Resources */ = {isa = PBXBuildFile; fileRef = B92C4D141DA76300005CADB2 /* Whoosh.wav */; };
 		B92C4D171DA76460005CADB2 /* Click.wav in Resources */ = {isa = PBXBuildFile; fileRef = B92C4D161DA76460005CADB2 /* Click.wav */; };
 		B92C4D191DA7686C005CADB2 /* Roll.wav in Resources */ = {isa = PBXBuildFile; fileRef = B92C4D181DA7686C005CADB2 /* Roll.wav */; };
@@ -88,6 +89,7 @@
 		B92354C21D683BC1006F653E /* RewardsDiceVault.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RewardsDiceVault.swift; sourceTree = "<group>"; };
 		B92354C41D6841AA006F653E /* RewardsDice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RewardsDice.swift; sourceTree = "<group>"; };
 		B92354C81D685331006F653E /* OpenRewardsDice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenRewardsDice.swift; sourceTree = "<group>"; };
+		B926070A1DC17FEE00FCB98C /* BuyStarCoinsNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuyStarCoinsNode.swift; sourceTree = "<group>"; };
 		B92C4D141DA76300005CADB2 /* Whoosh.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Whoosh.wav; sourceTree = "<group>"; };
 		B92C4D161DA76460005CADB2 /* Click.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Click.wav; sourceTree = "<group>"; };
 		B92C4D181DA7686C005CADB2 /* Roll.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Roll.wav; sourceTree = "<group>"; };
@@ -311,6 +313,7 @@
 				B95511D91CF8301E005DB77E /* AchievementUnlocked.swift */,
 				B9FED4931D9BC7ED000AE061 /* BetoShop.swift */,
 				B9E6D21C1D9C7D5A00B010D1 /* BuyDiceNode.swift */,
+				B926070A1DC17FEE00FCB98C /* BuyStarCoinsNode.swift */,
 			);
 			name = DropdownNodes;
 			sourceTree = "<group>";
@@ -496,6 +499,7 @@
 				B9F1D27A1C75AE6700E242F7 /* ButtonNode.swift in Sources */,
 				B9C7E2C41C8B88A300879014 /* CoinVault.swift in Sources */,
 				B92354C51D6841AA006F653E /* RewardsDice.swift in Sources */,
+				B926070B1DC17FEE00FCB98C /* BuyStarCoinsNode.swift in Sources */,
 				B9CDB80F1CB8593C00BC8A57 /* Settings.swift in Sources */,
 				B983ED291D022A7F00A9507F /* ThemeManager.swift in Sources */,
 			);

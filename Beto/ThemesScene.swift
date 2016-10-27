@@ -36,6 +36,7 @@ class ThemesScene: SKScene {
         var previousButtonPosition = CGPoint(x: -25, y: -206)
         var nextButtonPosition = CGPoint(x: 25, y: -206)
         var infoButtonPosition = CGPoint(x: 130, y: -206)
+        var shopButtonPosition = CGPoint(x: -120, y: -206)
 
         // Custom values for iPhone4
         if UIScreen.main.bounds.height == 480 {
@@ -44,6 +45,7 @@ class ThemesScene: SKScene {
             previousButtonPosition = CGPoint(x: -25, y: -160)
             nextButtonPosition = CGPoint(x: 25, y: -160)
             infoButtonPosition = CGPoint(x: 130, y: -160)
+            shopButtonPosition = CGPoint(x: -120, y: -160)
             perPageCount = 9
         }
         
@@ -136,11 +138,19 @@ class ThemesScene: SKScene {
             self.addChild(infoOverlay)
         }
         
+        let shopButton = ButtonNode(defaultButtonImage: "shopButton")
+        shopButton.position = shopButtonPosition
+        shopButton.action = {
+            let shop = BetoShop(type: .StarCoins)
+            self.addChild(shop.createLayer())
+        }
+        
         layer.addChild(header)
         layer.addChild(container)
         layer.addChild(previousButton)
         layer.addChild(nextButton)
         layer.addChild(infoButton)
+        layer.addChild(shopButton)
         
         addChild(background)
         addChild(layer)
