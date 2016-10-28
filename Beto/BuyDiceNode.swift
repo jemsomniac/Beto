@@ -159,8 +159,9 @@ class BuyDiceNode: SKNode {
             GameData.subtractCoins(self.total)
             GameData.save()
             
-            NotificationCenter.default.post(name: Notification.Name(rawValue: "updateHUDAfterBuy"), object: self)
-            
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "updateCoinsLabelAfterBuy"), object: self)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "toggleBuyButtons"), object: self)
+
             confirmPurchaseNode.close()
         }
         

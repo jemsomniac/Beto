@@ -50,7 +50,7 @@ class AudioManager {
         soundMuted = GameData.soundMuted
         musicMuted = GameData.musicMuted
         
-        backgroundMusic = SKAudioNode(fileNamed: "George Street Shuffle.mp3")
+        backgroundMusic = SKAudioNode(fileNamed: "Mining by Moonlight.mp3")
     }
     
     func toggleSound() {

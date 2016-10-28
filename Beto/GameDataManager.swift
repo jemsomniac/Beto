@@ -137,11 +137,14 @@ class GameDataManager {
     
     func addStarCoins(_ amount: Int) {
         starCoins += amount
-        
+
         if let value = achievementTracker[AchievementName.StarCoin.rawValue] {
             achievementTracker[AchievementName.StarCoin.rawValue] = value + amount
+        } else {
+            Achievements.update(.StarCoin)
+            achievementTracker[AchievementName.StarCoin.rawValue] = amount
         }
-        
+
         Achievements.update(.StarCoin)
     }
     

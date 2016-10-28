@@ -143,6 +143,8 @@ class ThemesScene: SKScene {
         shopButton.action = {
             let shop = BetoShop(type: .StarCoins)
             self.addChild(shop.createLayer())
+            
+            NotificationCenter.default.addObserver(self, selector: #selector(self.updateStarCoinsLabelAfterBuy), name: NSNotification.Name(rawValue: "updateStarCoinsLabelAfterBuy"), object: nil)
         }
         
         layer.addChild(header)
@@ -154,6 +156,10 @@ class ThemesScene: SKScene {
         
         addChild(background)
         addChild(layer)
+    }
+    
+    func updateStarCoinsLabelAfterBuy() {
+        starCoinsLabel.text = GameData.starCoins.formatStringFromNumberShortenMillion()
     }
     
     func previousPage() {

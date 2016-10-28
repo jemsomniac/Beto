@@ -91,7 +91,6 @@ class MenuViewController: UIViewController, GADInterstitialDelegate {
     
     func removeAds() {
         bannerView.removeFromSuperview()
-        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

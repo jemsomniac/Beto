@@ -143,13 +143,13 @@ class AchievementsManager {
         
         
         /********** AchievementName: StarCoin ***********/
-        let starCoinValues = [10, 100, 1000]
+        let starCoinValues = [25, 50, 100]
         let starCoin = Achievement(name: AchievementName.StarCoin.rawValue,
                                  displayName: "Wish upon a Star",
                                  requirementValues: starCoinValues,
                                  requirements: ["Collect \(starCoinValues[0]) star coins",
                                     "Collect \(starCoinValues[1]) star coins",
-                                    "Collect\(starCoinValues[2]) star coins"],
+                                    "Collect \(starCoinValues[2]) star coins"],
                                  rewards: [Reward(starCoins: 3, rewardsDice: .Platinum),
                                     Reward(starCoins: 5, rewardsDice: .Diamond),
                                     Reward(starCoins: 10, rewardsDice: .Ruby)])
@@ -384,14 +384,21 @@ class AchievementsManager {
     func update(_ name: AchievementName) {
         let index = list.index(where: {$0.name == name.rawValue})
         let achievement = list[index!]
-        let oldLevel = achievement.level
+        var oldLevel = achievement.level
         
         achievement.calculateLevel()
         achievement.calculateProgress()
         
-        if achievement.level > oldLevel {
+        let currentLevel = achievement.level
+        
+        while (currentLevel > oldLevel) {
+            oldLevel += 1
+            achievement.level = oldLevel
+            
             GameData.unlockedAchievementHandler!(achievement)
         }
+        
+        achievement.calculateLevel()
     }
 
     fileprivate func colorWinRequirements(_ color: Color, values: [Int]) -> [String] {

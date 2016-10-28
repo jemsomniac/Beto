@@ -45,8 +45,6 @@ class BetoShop: DropdownNode {
     }
     
     func displayBuyDiceNode() {
-        removeChildNodes()
-
         let buyGold = BuyDiceNode(diceKey: .Gold, price: 50000)
         buyGold.position = pointForIndex(0)
         
@@ -63,21 +61,29 @@ class BetoShop: DropdownNode {
         container.addChild(buyPlatinum)
         container.addChild(buyDiamond)
         container.addChild(buyRuby)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(toggleBuyButtons), name: NSNotification.Name(rawValue: "toggleBuyButtons"), object: nil)
     }
     
     func displayBuyStarCoinsNode() {
-        removeChildNodes()
+        GameData.unlockedAchievementHandler = showUnlockedAchievements
         
-        let basic = BuyStarCoinsNode(count: 25, bonusDice: [.Gold, .Diamond, .Platinum], price: "$1.99")
+        // Initialize packages
+        let basicPackage = Package(name: "Basic", starCoins: 25, bonusDice: [.Gold, .Platinum, .Diamond], price: "$1.99")
+        let plusPackage = Package(name: "Plus", starCoins: 100, bonusDice: [.Platinum, .Diamond, .Ruby], price: "$6.99")
+        let premiumPackage = Package(name: "Premium", starCoins: 150, bonusDice: [.Platinum, .Diamond, .Ruby], price: "$9.99")
+        let ultimatePackage = Package(name: "Ultimate", starCoins: 300, bonusDice: [.Ruby, .Ruby, .Ruby], price: "$17.99")
+        
+        let basic = BuyStarCoinsNode(package: basicPackage)
         basic.position = pointForIndex(0)
         
-        let plus = BuyStarCoinsNode(count: 100, bonusDice: [.Diamond, .Platinum, .Ruby], price: "$6.99")
+        let plus = BuyStarCoinsNode(package: plusPackage)
         plus.position = pointForIndex(1)
         
-        let premium = BuyStarCoinsNode(count: 150, bonusDice: [.Diamond, .Platinum, .Ruby], price: "$9.99")
+        let premium = BuyStarCoinsNode(package: premiumPackage)
         premium.position = pointForIndex(2)
         
-        let ultimate = BuyStarCoinsNode(count: 300, bonusDice: [.Ruby, .Ruby, .Ruby], price: "$17.99")
+        let ultimate = BuyStarCoinsNode(package: ultimatePackage)
         ultimate.position = pointForIndex(3)
         
         let addFreeText = SKSpriteNode(imageNamed: "adFree")
@@ -90,12 +96,18 @@ class BetoShop: DropdownNode {
         container.addChild(addFreeText)
     }
     
-    func removeChildNodes() {
-        let children = container.children
+    fileprivate func showUnlockedAchievements(_ achievement: Achievement) {
+        let unlocked = AchievementUnlocked(achievement: achievement)
+        container.addChild(unlocked.createLayer())
+        
+        // DELETE: Test if this will cause an error if coming from the adButton
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "updateStarCoinsLabelAfterBuy"), object: self)
+    }
     
-        for child in children {
-            if child.name != "closeButton" {
-                child.removeFromParent()
+    @objc fileprivate func toggleBuyButtons() {
+        for child in container.children {
+            if let node = child as? BuyDiceNode {
+                node.toggleBuy()
             }
         }
     }

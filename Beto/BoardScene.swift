@@ -36,6 +36,7 @@ class BoardScene: SKScene {
     fileprivate var winningSquares: [Square]
     fileprivate var previousBets: [(color: Color, wager: Int)]
     
+    fileprivate var unlockedCoins: [DropdownNode]
     fileprivate var unlockedAchievements: [DropdownNode]
     fileprivate var rewardTriggered = false
     fileprivate var rewardBoostActivated = false
@@ -51,11 +52,13 @@ class BoardScene: SKScene {
         let themes = ThemeManager()
         let theme = themes.getTheme(GameData.currentThemeName)
         
+        
         /***** Initialize Variables *****/
         selectedColors = []
         squares = []
         winningSquares = []
         previousBets = []
+        unlockedCoins = []
         unlockedAchievements = []
         
         layer = SKNode()
@@ -147,7 +150,7 @@ class BoardScene: SKScene {
         anchorPoint = CGPoint(x: 0.5, y: 0.5)
         
         GameData.unlockedCoinHandler = showUnlockedCoin
-        GameData.unlockedAchievementHandler = showUnlockedAchievements
+        GameData.unlockedAchievementHandler = showUnlockedAchievement
         
         // Set button actions
         menuButton.action = presentMenuScene
@@ -255,10 +258,10 @@ class BoardScene: SKScene {
         let shop = BetoShop(type: .RewardsDice)
         addChild(shop.createLayer())
         
-        NotificationCenter.default.addObserver(self, selector: #selector(updateHUDAfterBuy), name: NSNotification.Name(rawValue: "updateHUDAfterBuy"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateCoinsLabelAfterBuy), name: NSNotification.Name(rawValue: "updateCoinsLabelAfterBuy"), object: nil)
     }
     
-    func updateHUDAfterBuy() {
+    func updateCoinsLabelAfterBuy() {
         coinsLabel.text = GameData.coins.formatStringFromNumberShortenMillion()
     }
     
@@ -465,7 +468,7 @@ class BoardScene: SKScene {
         addChild(rewardsDiceVault.createLayer())
         
         // DELETE: Test
-        NotificationCenter.default.addObserver(self, selector: #selector(updateHUDAfterBuy), name: NSNotification.Name(rawValue: "updateHUDAfterBuy"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateCoinsLabelAfterBuy), name: NSNotification.Name(rawValue: "updateCoinsLabelAfterBuy"), object: nil)
     }
     
     fileprivate func openRewardsDice(_ dice: RewardsDice) {
@@ -581,7 +584,7 @@ class BoardScene: SKScene {
     }
     
     /***** Dropdown Functions *****/
-    fileprivate func showUnlockedAchievements(_ achievement: Achievement) {
+    fileprivate func showUnlockedAchievement(_ achievement: Achievement) {
         let unlocked = AchievementUnlocked(achievement: achievement)
         unlockedAchievements.append(unlocked)
     }
@@ -660,10 +663,11 @@ class BoardScene: SKScene {
         container.addChild(claimButton)
         
         let coinUnlocked = DropdownNode(container: container)
-        
         claimButton.action = coinUnlocked.close
         
-        addChild(coinUnlocked.createLayer())
+        unlockedCoins.append(coinUnlocked)
+        
+//        addChild(coinUnlocked.createLayer())
     }
     
     func resolveRandomReward() {
@@ -828,6 +832,13 @@ class BoardScene: SKScene {
             
             addChild(rewardUnlocked.createLayer())
         }
+        
+        // Show unlocked Coin
+        for node in unlockedCoins.reversed() {
+            addChild(node.createLayer())
+        }
+        
+        unlockedCoins = []
         
         // Show unlocked Achievements
         for node in unlockedAchievements.reversed() {
