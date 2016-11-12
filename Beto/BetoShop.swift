@@ -98,7 +98,12 @@ class BetoShop: DropdownNode {
     
     fileprivate func showUnlockedAchievements(_ achievement: Achievement) {
         let unlocked = AchievementUnlocked(achievement: achievement)
-        container.addChild(unlocked.createLayer())
+        
+        // DELETE: Test
+        let layer =  unlocked.createLayer()
+        layer.setScale(1.0)
+        
+        container.addChild(layer)
         
         // DELETE: Test if this will cause an error if coming from the adButton
         NotificationCenter.default.post(name: Notification.Name(rawValue: "updateStarCoinsLabelAfterBuy"), object: self)

@@ -116,7 +116,7 @@ class Settings {
         infoOverlay.setScale(Constant.ScaleFactor)
         
         let infoSprite = SKSpriteNode(imageNamed: "creditsInfo")
-        infoSprite.position = CGPoint(x: 0, y: 50)
+        infoSprite.position = CGPoint(x: 0, y: 0)
         
         infoOverlay.addChild(infoSprite)
         infoOverlay.alpha = 0.0
